@@ -1,0 +1,7 @@
+page connexion : 
+-type utilisateur
+-remenber me ?
+
+page connexion :
+-taille min mdp
+-maj min shiffre chr spé ?

@@ -1,0 +1,7 @@
+Function JS:
+
+<script type="text/javascript">
+            function RedirectionJavascript(){
+              document.location.href="file:///D:/Documents/JavaScript/inscription.html?";
+            }
+ </script>

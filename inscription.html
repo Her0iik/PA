@@ -3,12 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
+        <script src="js/jquery-3.4.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body class="text-center">
-        <form role="form" data-toggle="validator" class="form-inscription">
-            <img class="mb-4" src="assets/logo.pnj" alt="" width="72" height="72">
+        <form id="inscription" role="form" data-toggle="validator" class="form-inscription">
+            <img class="mb-4" src="assets/logo.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Inscription </h1>
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Nom" required>
@@ -25,15 +27,42 @@
                 <input type="password" id="inputPassword" class="form-control" data-minlength="6" placeholder="Mot de passe" required>
             </div>
             <div class="form-group">
-                    <input type="password" id="inputPasswordComfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
+                    <input type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
+                    <div id="msgError" class="help-block" >Les deux mots de passe sont différents</div>
+
                 </div>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>
-            
-        </form>
-       
-    </body>
-        <script src="js/jquery-3.4.0.min"></script>
-        <script src="js/app.js"></script>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>   
+            <button type="button" class="btn btn-link" onclick="document.location.href='file:///D:/Documents/JavaScript/connexion.html?'">Retour</button>
+
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">This is a test
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                </ul>
+            </div>
+
+    <!--  -->
+            <script>
+            jQuery(function($) {
+                $("#inscription").submit(function(e) {
+                    var password1 = $("#inputPassword").val();
+                    var password2 = $("#inputPasswordConfirm").val();
+                    e.preventDefault();
+                    if (password1==password2) {
+                        alert("mdp ok" );
+                    }else{
+                        alert("mdp ERROR");
+                        $("#msgError").show();
+                    }
+                    
+                });    
+            });
+        </script>
+        </form>       
+    </body>  
 </html>
 
 
