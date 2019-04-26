@@ -32,8 +32,8 @@
 
                 </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>   
-            <button type="button" class="btn btn-link" onclick="document.location.href='file:///D:/Documents/JavaScript/connexion.html?'">Retour</button>
-
+            <button type="button" class="btn btn-link" onclick="document.location.href='connexion.html?'">Retour</button>
+<!--
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">This is a test
                 <span class="caret"></span></button>
@@ -44,7 +44,7 @@
                 </ul>
             </div>
 
-    <!--  -->
+      -->
             <script>
             jQuery(function($) {
                 $("#inscription").submit(function(e) {
@@ -54,7 +54,6 @@
                     if (password1==password2) {
                         alert("mdp ok" );
                     }else{
-                        alert("mdp ERROR");
                         $("#msgError").show();
                     }
                     
@@ -64,5 +63,3 @@
         </form>       
     </body>  
 </html>
-
-

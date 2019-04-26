@@ -5,9 +5,10 @@
         <title> Lightning School</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery-3.4.0.min.js"></script>
     </head>
     <body class="text-center">
-        <form class="form-signin">
+        <form id="signin" class="form-signin">
             <img class="mb-4" src="assets/logo.png" alt="" width="80" height="80">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>           
             
@@ -21,7 +22,8 @@
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                
+            <div id="msgError" class="help-block" >login ou mdp faux !</div>
+
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
@@ -30,7 +32,7 @@
 
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>
                        
-            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='file:///D:/Documents/JavaScript/inscription.html?'">Inscription</button>
+            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='file://C:/Users/Thomas/Documents/GitHub/PA/inscription.html?'">Inscription</button>
                        
             <script>
                 $(".dropdown-menu li a").click(function(){
@@ -41,7 +43,23 @@
                     document.getElementById('validation').className="btn btn-lg btn-outline-primary btn-block";
                 }
             </script>
+
+            <script>
+            jQuery(function($) {
+                $("#signin").submit(function(e) {
+                    var password = $("#inputPassword").val();
+                    var login = $("#inputEmail").val();
+                    e.preventDefault();
+                    if (password=="aaa" & login=="a@a") {
+                        document.location.href='accueil.html?'
+                    }else{
+                        $("#msgError").show();
+                        alert("login ou mdp faux !");
+                    }
+                    
+                });    
+            });
+            </script>
         </form>
     </body>
-    <script src="js/jquery-3.4.0.min.js"></script>
 </html>
