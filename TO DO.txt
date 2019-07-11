@@ -1,7 +1,5 @@
 page connexion : 
--type utilisateur menu deroulant bug !
--remenber me ?
+(-remenber me ?)
+-Créer cookie après connexion valide 
 
-page connexion :
--taille min mdp
--mdp complex : maj min chiffre char spé ?
+-toutes les pages vérifier cookie existe

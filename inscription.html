@@ -30,21 +30,19 @@
                     <input type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
                     <div id="msgError" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">Etudiant</label>
+            </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">Professeur</label>
+            </div>   
             
                 
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>   
             <button type="button" class="btn btn-link" onclick="document.location.href='connexion.html?'">Retour</button>
-<!--
-      -->
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">This is a test
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">HTML</a></li>
-                    <li><a href="#">CSS</a></li>
-                    <li><a href="#">JavaScript</a></li>
-                </ul>
-            </div>
+ 
             <script>
             jQuery(function($) {
                 $("#inscription").submit(function(e) {

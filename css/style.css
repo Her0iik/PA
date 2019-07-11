@@ -55,8 +55,10 @@ body {
   padding: 15px;
   margin: auto;
 }
-.form-inscription .checkbox {
+.form-inscription .form-check-inline {
   font-weight: 400;
+  margin: auto;
+  margin-bottom: 15px;
 }
 .form-inscription .form-control {
   position: relative;

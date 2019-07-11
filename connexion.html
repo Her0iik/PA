@@ -32,6 +32,8 @@
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
+
+            Note : ajouter les radio boutton avec admin pour channger le chemin de la requet post si admin 
             -->
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>
                        
@@ -53,19 +55,24 @@
                     var login = $("#inputEmail").val();
                     e.preventDefault();
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/login", true);
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.send(JSON.stringify({"mail" : login, "password" : password}));
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
-                            if(xhr.status == 200) {
-                            alert("connexion réussi !" );
+                            if(xhr.status == 202) {
                             console.log(xhr.getResponseHeader("Authorization"));
+                            alert("connexion réussi !" );
                             window.location="accueil.html?";
                             }
-                            else {
-                                alert("connexion FAILED ! " );
+                            else if(xhr.status == 200) {
+                            console.log(xhr.getResponseHeader("Authorization"));
+                            alert("attention connexion admin" );
+                            }
+                            else {                               
                                 console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("connexion FAILED !" );
                             }
                         }
                     };
