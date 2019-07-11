@@ -10,30 +10,32 @@
     <body class="text-center">
         <form id="signin" class="form-signin">
             <img class="mb-4" src="assets/logo.png" alt="" width="80" height="80">
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>           
-            
-            <a class="btn btn-lg btn-primary dropdown-toggle btn-block" data-toggle="dropdown" href="#">Type d'utilisateur <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Etudiant</a></li>
-              <li><a href="#">Professeur</a></li>
-            </ul>
-
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <!--    
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="exampleRadios1">Etudiant</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <label class="form-check-label" for="exampleRadios2">Professeur</label>
+            </div>   
+            -->
             <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div id="msgError" class="help-block" >login ou mdp faux !</div>
-
+            <!--
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-
+            -->
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>
                        
-            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='file://C:/Users/Thomas/Documents/GitHub/PA/inscription.html?'">Inscription</button>
-                       
+            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='inscription.html?'">Inscription</button>                
             <script>
                 $(".dropdown-menu li a").click(function(){
                     $(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
@@ -50,13 +52,24 @@
                     var password = $("#inputPassword").val();
                     var login = $("#inputEmail").val();
                     e.preventDefault();
-                    if (password=="aaa" & login=="a@a") {
-                        document.location.href='accueil.html?'
-                    }else{
-                        $("#msgError").show();
-                        alert("login ou mdp faux !");
-                    }
-                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/login", true);
+                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    xhr.send(JSON.stringify({"mail" : login, "password" : password}));
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4){
+                            if(xhr.status == 200) {
+                            alert("connexion réussi !" );
+                            console.log(xhr.getResponseHeader("Authorization"));
+                            window.location="accueil.html?";
+                            }
+                            else {
+                                alert("connexion FAILED ! " );
+                                console.log(xhr.statusText);
+                            }
+                        }
+                    };
+            
                 });    
             });
             </script>
