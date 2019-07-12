@@ -63,13 +63,21 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
                             if(xhr.status == 202) {
-                            console.log("auth api: "+xhr.getResponseHeader("Authorization"));
                             var jwt =xhr.getResponseHeader("Authorization");
-                            alert("connexion réussi !" );
+                            
                             var expireTimer = 0.125;
+                            var user=xhr.responseText;
+                            // var jsonResponse = JSON.parse(user);
+                            //console.log("id user connected" +jsonResponse["id"]);
+                            Cookies.set('user', user, {expires: expireTimer});
                             Cookies.set('token', jwt, {expires: expireTimer});
-                            console.log("cookie: "+Cookies.get('token'));
-                            //window.location="accueil.html?";
+                            console.log("cookie token: "+Cookies.get('token'));
+                            console.log("cookie user: "+Cookies.get('user'));
+                            jsonResponse = JSON.parse(Cookies.get('user'));
+                            console.log("json parcer id " +jsonResponse["id"]);
+                            
+                            alert("connexion réussi !" );
+                            window.location="accueil.html?";
                             }
                             else if(xhr.status == 200) {
                             console.log(xhr.getResponseHeader("Authorization"));
