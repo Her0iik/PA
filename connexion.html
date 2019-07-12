@@ -7,8 +7,11 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery-3.4.0.min.js"></script>
     </head>
-    <body class="text-center">
+    <body class="text-center"> 
+
         <form id="signin" class="form-signin">
+
+           
             <img class="mb-4" src="assets/logo.png" alt="" width="80" height="80">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <!--    
@@ -47,8 +50,11 @@
                     document.getElementById('validation').className="btn btn-lg btn-outline-primary btn-block";
                 }
             </script>
-
+            <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
             <script>
+            Cookies.set('name', 'value');
+            Cookies.get('name'); // => 'value'
+
             jQuery(function($) {
                 $("#signin").submit(function(e) {
                     var password = $("#inputPassword").val();
@@ -63,7 +69,12 @@
                             if(xhr.status == 202) {
                             console.log(xhr.getResponseHeader("Authorization"));
                             alert("connexion réussi !" );
-                            window.location="accueil.html?";
+                            var expireTimer = 0.125;
+                            //Cookies.set('token', 'jwt', {expires: expireTimer});
+                           // console.log(Cookies.get('token'));
+                            //window.location="accueil.html?";
+                            Cookies.set('token', 'jwt');
+                            console.log(Cookies.get('token'));
                             }
                             else if(xhr.status == 200) {
                             console.log(xhr.getResponseHeader("Authorization"));
@@ -81,5 +92,6 @@
             });
             </script>
         </form>
+
     </body>
 </html>

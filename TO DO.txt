@@ -3,3 +3,14 @@ page connexion :
 -Créer cookie après connexion valide 
 
 -toutes les pages vérifier cookie existe
+
+page accueil : 
+-ajouter récuper le nom du user connecté 
+-créer les menu avec exo 
+
+page inscirption : 
+- fair appel api pour créer un user 
+
+Créer accueil - profil 
+-modifier le profil
+
