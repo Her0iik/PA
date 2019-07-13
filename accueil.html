@@ -6,74 +6,23 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/acceuil.css">
         <script src="js/jquery-3.4.0.min.js"></script>
+        <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+       
     </head>
-    <script>/*
-        function checkCookie() {
-            alert("token: "+Cookies.get('token'));
-            alert("user: "+Cookies.get('user'));
-            if (document.cookie == false){
-                alert("you have to connect to acces this page !");
-            }
-            else{
-                alert("you are connect: "+Cookies.get('user'));
-            }
+    <script>
+        function checkCookie() {  
+            if (typeof $.cookie('LS_user') === 'undefined'){
+                alert("no cookie pls get connected ! ");
+                window.location="connexion.html?";
 
-            
-            if (Cookies.get('token') == "undefined" || Cookies.get('user') == "undefined") {
-               // $('#x').text("No Cookie.");
-               alert("you have to connect to acces this page !");
-               // window.location.href = 'connexion.html?'
-            } else {
-                alert("you are connect: "+Cookies.get('user'));
-               // $('#x').text("You have Cookie.");
-            }*/
-
-
-            function getCookie(cname) {
-                var name = cname + "=";
-                var ca = document.cookie.split(';');
-                for(var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    console.log("c :"+c);
-
-                    jsonResponse = JSON.parse(Cookies.get('user'));
-                    console.log("json parcer id " +jsonResponse["id"]);
-
-                    var jsonResponse = JSON.parse(c);
-                    console.log("json id !!!!!" +jsonResponse["id"]);
-
-
-                    while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                    }
-                    console.log("c index :"+c.indexOf(name));
-                    if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                    }
-                }
-                return "";
-                }
-
-                function checkCookie() {
-                    
-                    jsonResponse = JSON.parse(Cookies.get('user'));
-                    console.log("json parcer id " +jsonResponse["id"]);
-                    if (jsonResponse["id"]!=0){
-                        alert("error " );
-                    }else{
-                        alert("Welcome again " r);
-                    }
-/*
-                var user = getCookie("user");
-                if (user != "") {
-                    alert("Welcome again " + user);
-                } else {
-                    alert("you have to connect to acces this page !");
-                }*/
-            }
-        
-        </script>
+            }              
+            else if (Cookies.get('LS_user')){
+                jsonResponse = JSON.parse(Cookies.get('LS_user'));
+                console.log("already connected user id : "+jsonResponse["id"]);
+            } 
+        }
+    </script>
     <body onLoad="checkCookie();">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="#">
@@ -102,6 +51,8 @@
         <script>
             $(document).ready(function(){
                 $("#logout").click(function(){
+                    Cookies.remove('LS_user');
+                    Cookies.remove('LS_token');
                     document.location.href='connexion.html?'
                 });
             });

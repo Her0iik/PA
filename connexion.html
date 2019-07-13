@@ -69,11 +69,11 @@
                             var user=xhr.responseText;
                             // var jsonResponse = JSON.parse(user);
                             //console.log("id user connected" +jsonResponse["id"]);
-                            Cookies.set('user', user, {expires: expireTimer});
-                            Cookies.set('token', jwt, {expires: expireTimer});
-                            console.log("cookie token: "+Cookies.get('token'));
-                            console.log("cookie user: "+Cookies.get('user'));
-                            jsonResponse = JSON.parse(Cookies.get('user'));
+                            Cookies.set('LS_user', user, {expires: expireTimer});
+                            Cookies.set('LS_token', jwt, {expires: expireTimer});
+                            console.log("cookie token: "+Cookies.get('LS_token'));
+                            console.log("cookie user: "+Cookies.get('LS_user'));
+                            jsonResponse = JSON.parse(Cookies.get('LS_user'));
                             console.log("json parcer id " +jsonResponse["id"]);
                             
                             alert("connexion réussi !" );
