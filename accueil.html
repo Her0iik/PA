@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <title> Lightning School</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/acceuil.css">
+
+        <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery-3.4.0.min.js"></script>
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
@@ -43,21 +44,25 @@
                         <a class="nav-link " href="#">Profil</a>
                     </li>
                 </ul>
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Profil</button>
+                <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Profil</button>
                 <p>" "</p>
                 <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;">
             </div>
         </nav>
-        <script>
-            $(document).ready(function(){
-                $("#logout").click(function(){
-                    Cookies.remove('LS_user');
-                    Cookies.remove('LS_token');
-                    document.location.href='connexion.html?'
-                });
-            });
-        </script>
+        <div  id="test">
+        </div>
     </body>
-
+    <script>
+        $(document).ready(function(){
+            $("#logout").click(function(){
+                Cookies.remove('LS_user');
+                Cookies.remove('LS_token');
+                document.location.href='connexion.html?'
+            });
+            $("#profil").click(function(){
+                document.location.href='profil.html?'         
+            });
+        });
+    </script>
 </html>
     

@@ -75,8 +75,6 @@
                             console.log("cookie user: "+Cookies.get('LS_user'));
                             jsonResponse = JSON.parse(Cookies.get('LS_user'));
                             console.log("json parcer id " +jsonResponse["id"]);
-                            
-                            alert("connexion réussi !" );
                             window.location="accueil.html?";
                             }
                             else if(xhr.status == 200) {
