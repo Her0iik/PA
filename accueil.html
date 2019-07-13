@@ -19,8 +19,12 @@
 
             }              
             else if (Cookies.get('LS_user')){
-                jsonResponse = JSON.parse(Cookies.get('LS_user'));
-                console.log("already connected user id : "+jsonResponse["id"]);
+                jsonUser = JSON.parse(Cookies.get('LS_user'));
+                console.log("already connected user id :"+jsonUser["id"]);
+                var nom =jsonUser["name"];
+                if (nom==null){
+                alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                }
             } 
         }
     </script>

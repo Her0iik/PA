@@ -68,6 +68,7 @@
                     <input id="confirmPwd" type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
                    <div id="msgError" type="hidden" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
+            <!--
             <div class="form-check-inline">
                 <input id="student" class="form-check-input" type="radio" name="Radios" id="Radios1" value="option1" checked>
                 <label class="form-check-label" for="Radios1">Etudiant</label>
@@ -75,7 +76,7 @@
             <div class="form-check-inline">
                 <input id ="teacher" class="form-check-input" type="radio" name="Radios" id="Radios2" value="option2">
                 <label class="form-check-label" for="Radios2">Professeur</label>
-            </div>   
+            </div>   -->
         
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Saved</button>   
         </form>  
@@ -88,13 +89,14 @@
             $("#nom").attr("placeholder", jsonUser["name"]).val("").focus().blur();
             $("#prenom").attr("placeholder", jsonUser["surmane"]).val("").focus().blur();
             $("#email").attr("placeholder", jsonUser["mail"]).val("").focus().blur();
+            /*
             if(jsonUser["userTypeEnum"]=="STUDENT"){
                 $('#student').attr('checked', true);
                 $('#teacher').attr('checked', false);
             }else{
                 $('#student').attr('checked', false);
                 $('#teacher').attr('checked', true);
-            }
+            }*/
 
             $("#logout").click(function(){
                 Cookies.remove('LS_user');

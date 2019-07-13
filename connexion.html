@@ -15,82 +15,77 @@
            
             <img class="mb-4" src="assets/logo.png" alt="" width="80" height="80">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <!--    
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">Etudiant</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">Professeur</label>
-            </div>   
-            -->
             <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div id="msgError" class="help-block" >login ou mdp faux !</div>
-            <!--
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-
-            Note : ajouter les radio boutton avec admin pour channger le chemin de la requet post si admin 
-            -->
+            
+            
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>
-                       
-            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='inscription.html?'">Inscription</button>                
+            <!--
+            <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='inscription.html?'">Inscription</button>
+            -->              
+                           
             <script>
-                $(".dropdown-menu li a").click(function(){
+               /* $(".dropdown-menu li a").click(function(){
                     $(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
                 });
 
                 function changeclassName() {
                     document.getElementById('validation').className="btn btn-lg btn-outline-primary btn-block";
-                }
+                }*/
 
-            jQuery(function($) {
-                $("#signin").submit(function(e) {
-                    var password = $("#inputPassword").val();
-                    var login = $("#inputEmail").val();
-                    e.preventDefault();
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
-                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    xhr.send(JSON.stringify({"mail" : login, "password" : password}));
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4){
-                            if(xhr.status == 202) {
-                            var jwt =xhr.getResponseHeader("Authorization");
-                            
-                            var expireTimer = 0.125;
-                            var user=xhr.responseText;
-                            // var jsonResponse = JSON.parse(user);
-                            //console.log("id user connected" +jsonResponse["id"]);
-                            Cookies.set('LS_user', user, {expires: expireTimer});
-                            Cookies.set('LS_token', jwt, {expires: expireTimer});
-                            console.log("cookie token: "+Cookies.get('LS_token'));
-                            console.log("cookie user: "+Cookies.get('LS_user'));
-                            jsonResponse = JSON.parse(Cookies.get('LS_user'));
-                            console.log("json parcer id " +jsonResponse["id"]);
-                            window.location="accueil.html?";
-                            }
-                            else if(xhr.status == 200) {
-                            console.log(xhr.getResponseHeader("Authorization"));
-                            alert("attention connexion admin" );
-                            }
-                            else {                               
+                jQuery(function($) {
+                    $("#signin").submit(function(e) {
+                        var password = $("#inputPassword").val();
+                        var login = $("#inputEmail").val();
+                        e.preventDefault();
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
+                        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                        xhr.send(JSON.stringify({"mail" : login, "password" : password}));
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState == 4){
+                                if(xhr.status == 202) {
+                                    var jwt =xhr.getResponseHeader("Authorization");   
+                                    var expireTimer = 0.125;
+                                    var user=xhr.responseText;                               
+                                    var jsonUser = JSON.parse(user);
+                                    if(jsonUser["userTypeEnum"]=="ADMIN"){
+                                        Cookies.set('LS_token_admin', jwt, {expires: expireTimer});
+                                        Cookies.set('LS_user_admin', user, {expires: expireTimer});
+                                        console.log("cookie token admin: "+Cookies.get('LS_token'));
+                                        window.location="inscription.html?";
+                                    }
+                                    else{
+                                        Cookies.set('LS_token', jwt, {expires: expireTimer});
+                                        Cookies.set('LS_user', user, {expires: expireTimer});
+                                        console.log("cookie token user: "+Cookies.get('LS_token'));
+                                        window.location="accueil.html?";
+                                    }
+                                }
+                                else if (xhr.status == 403){ 
+                                console.log(xhr.status);                              
                                 console.log(xhr.statusText);
                                 console.log(xhr.text);
-                                alert("connexion FAILED !" );
+                                alert("email et/ou mot de passe faux !" );
+                                }else if (xhr.status == 500){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur serveur " );
+                                }
+                                else { 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur inconnue " );
+                                }
                             }
                         }
-                    };
-            
-                });    
-            });
+                    });    
+                });
             </script>
         </form>
 

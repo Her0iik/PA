@@ -12,53 +12,91 @@
     <body class="text-center">
         <form id="inscription" role="form" data-toggle="validator" class="form-inscription">
             <img class="mb-4" src="assets/logo.png" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 font-weight-normal">Inscription </h1>
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Nom" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Prénom" required>
-            </div>
+            <h1 class="h3 mb-3 font-weight-normal">Créer un compte </h1>
             <div class="form-group">
                 <label for="inputEmail" class="sr-only">Email address</label>
                     <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
                 <label for="inputPassword" class="sr-only">Password</label>
             </div>
             <div class="form-group">
-                <input type="password" id="inputPassword" class="form-control" data-minlength="6" placeholder="Mot de passe" required>
+                <input type="password" id="inputPassword" class="form-control" maxlength="32" minlength="8" placeholder="Mot de passe" required>
             </div>
             <div class="form-group">
                     <input type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
                     <div id="msgError" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
             <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">Etudiant</label>
+                <input class="form-check-input" type="radio" name="RadioStudent" id="RadioStudent" value="option1" checked>
+                <label class="form-check-label" for="RadioStudent">Etudiant</label>
             </div>
             <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">Professeur</label>
+                <input class="form-check-input" type="radio" name="Radio2" id="Radio2" value="option2">
+                <label class="form-check-label" for="Radio2">Professeur</label>
             </div>   
             
                 
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>   
-            <button type="button" class="btn btn-link" onclick="document.location.href='connexion.html?'">Retour</button>
- 
-            <script>
-            jQuery(function($) {
-                $("#inscription").submit(function(e) {
-                    var password1 = $("#inputPassword").val();
-                    var password2 = $("#inputPasswordConfirm").val();
+            <button id="retour" type="button" class="btn btn-link">Retour</button>
+        </form> 
+    </body>
+    <script>
+        $( "#retour" ).click(function() {
+            Cookies.remove('LS_user_admin');
+            Cookies.remove('LS_token_admin');
+            document.location.href='connexion.html?'
+        });
+        jQuery(function($) {
+            $("#inscription").submit(function(e) {
+                var password1 = $("#inputPassword").val();
+                var password2 = $("#inputPasswordConfirm").val();
+                e.preventDefault();
+                if (password1!=password2) {
+                    $("#msgError").show();
+                }
+                else{                  
+                    var password = $("#inputPassword").val();
+                    var login = $("#inputEmail").val();
+                    var typeUser ;
+                    if($('#RadioStudent').is(':checked')){typeUser="STUDENT";}
+                    else{typeUser="TEACHER";}
                     e.preventDefault();
-                    if (password1==password2) {
-                        alert("mdp ok" );
-                    }else{
-                        $("#msgError").show();
-                    }
-                    
-                });    
-            });
-        </script>
-        </form>       
-    </body>  
+                    var jwt= Cookies.get('LS_token_admin');
+                    console.log("jwt :"+jwt);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users", true);
+                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    xhr.setRequestHeader('Authorization',jwt);
+                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser}));
+                    xhr.onreadystatechange = function() {
+                        if(xhr.readyState == 4){
+                            if(xhr.status == 201) {
+                                console.log(xhr.responseText);
+                                alert("création succes !" );
+                                Cookies.remove('LS_user_admin');
+                                Cookies.remove('LS_token_admin');
+                                window.location="connexion.html?";
+                            }
+                            else if (xhr.status == 403){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("acces interdit " );
+                            }else if (xhr.status == 500){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur serveur " );
+                            }
+                            else { 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur inconnue " );
+                            }
+                        }
+                    }; 
+                }                              
+            });    
+        });      
+    </script>   
 </html>
