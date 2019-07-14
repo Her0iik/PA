@@ -4,11 +4,10 @@
         <meta charset="utf-8">
         <title> Lightning School</title>
         <script src="js/jquery-3.4.0.min.js"></script>
-       <link rel="stylesheet" href="css/bootstrap.min.css">
-       <link rel="stylesheet" href="css/style.css">
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
         <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -55,7 +54,8 @@
                             </li>
                         </ul>
                     <form class="form-inline my-2 my-lg-0"></form>
-                    <p id="nomUserMenu">   </p>
+                    <button id="nomUserMenu" type="button" class="btn btn-dark btn-lg" disabled>Button</button>
+                    <p> </p>
                     <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
                     <p>    </p>
                     <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
@@ -65,10 +65,8 @@
     </head>
     
     <body id="body" onLoad="checkCookie();" class="content">
-
         <div  id="test" class="inner-div">
-
-                <button id="testUser" type="button" class="btn btn-primary">Primary</button>
+            <button id="testUser" type="button" class="btn btn-primary">Primary</button></div>
     </body>
     <script>
         $(document).ready(function(){
@@ -78,30 +76,37 @@
                     var jwt= Cookies.get('LS_token');
                     console.log("user id :"+idUser);                              
                     console.log("user jwt :"+jwt);
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
-                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    xhr.setRequestHeader('Authorization',jwt);
-                    xhr.onreadystatechange = function() {
-                        alert(xhr.response);
-                        if (xhr.readyState == 4){
-                            if(xhr.status == 202) {
-                                alert(xhr.response);
-                                alert(xhr.text);
-                                alert(xhr.responseText);
+                    alert("test1");
+                    var xhr2 = new XMLHttpRequest();
+                    alert("test2");
+                    
+                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
+                    alert("test3");
+                    xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    alert("test4");
+                    xhr2.setRequestHeader('Authorization',jwt);
+                    alert("test5");
+                    xhr2.onreadystatechange = function() {
+                        alert("test6");
+                        if (xhr2.readyState == 4){
+                            alert("test7");
+                            if(xhr2.status == 202 ||xhr2.status == 200) {
+                                console.log(xhr2.response);
+                                console.log(xhr2.text);
+                                console.log(xhr2.responseText);
                                 alert("succes" );
                             }
-                            else if (xhr.status == 403){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
+                            else if (xhr2.status == 403){ 
+                                console.log(xhr2.status);                              
+                                console.log(xhr2.statusText);
+                                console.log(xhr2.text);
                                 alert("interdit" );
                             }
                             else { 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("erreur" + xhr.status);
+                                console.log(xhr2.status);                              
+                                console.log(xhr2.statusText);
+                                console.log(xhr2.text);
+                                alert("erreur" + xhr2.status);
                             }
                         }
                     }
@@ -123,16 +128,19 @@
             }              
             else if (Cookies.get('LS_user')){
                 jsonUser = JSON.parse(Cookies.get('LS_user'));
-                var nom =jsonUser["name"];
+                var prenom =jsonUser["surmane"];
                 var typeUser =jsonUser["userTypeEnum"];
                 if(typeUser=="STUDENT"){
                     $('#navbarStudent').show();
                 }else{
                     $('#navbarTeacher').show();
                 }
-                $('#nomUserMenu').text(nom);
-                if (nom==null){
-                alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                
+                if (prenom!=null){
+                    $('#nomUserMenu').text("Welcome " +prenom);
+                
+                }else{
+                    alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
                 }
             } 
         }

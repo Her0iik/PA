@@ -10,38 +10,27 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-   
         <script>
             function checkCookie() {  
                 if (typeof $.cookie('LS_user') === 'undefined'){
-                    alert("no cookie pls get connected ! ");
+                    alert("pls connect you ! ");
                     window.location="connexion.html?";
                 }              
                 else if (Cookies.get('LS_user')){
                     jsonUser = JSON.parse(Cookies.get('LS_user'));
-                    var nom =jsonUser["name"];
+                    var prenom =jsonUser["surname"];
                     var typeUser =jsonUser["userTypeEnum"];
                     if(typeUser=="STUDENT"){
                         $('#navbarStudent').show();
                     }else{
                         $('#navbarTeacher').show();
                     }
-                    $('#nomUserMenu').text(nom);
-                    if (nom==null){
-                    alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                    if (prenom!=null){
+                        $('#nomUserMenu').text(prenom);
                     }
                 } 
             }
         </script>
-        <meta charset="utf-8">
-        <title> Lightning School</title>
-        <script src="js/jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        
-        
-        <script src="js/js_cookie.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
         <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <a class="navbar-brand" href="#">
                     <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
@@ -86,7 +75,10 @@
                             </li>
                         </ul>
                     <form class="form-inline my-2 my-lg-0"></form>
-                    <p id="nomUserMenu">   </p>
+                   
+                    
+                    <button id="nomUserMenu" type="button" class="btn btn-dark btn-lg" disabled> </button>
+                    <p> </p>
                     <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
                     <p>    </p>
                     <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
