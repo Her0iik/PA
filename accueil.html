@@ -9,23 +9,9 @@
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>   
     </head>
-    <script>
-        function checkCookie() {  
-            if (typeof $.cookie('LS_user') === 'undefined'){
-                alert("no cookie pls get connected ! ");
-                window.location="connexion.html?";
-            }              
-            else if (Cookies.get('LS_user')){
-                jsonUser = JSON.parse(Cookies.get('LS_user'));
-                var nom =jsonUser["name"];
-                if (nom==null){
-                alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
-                }
-            } 
-        }
-    </script>
+    
     <body onLoad="checkCookie();">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="#">
                 <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
             </a>
@@ -33,7 +19,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
+                <ul id="navbarStudent"  class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
                     </li>
@@ -41,12 +27,26 @@
                         <a class="nav-link" href="#">Classe</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Profil</a>
+                        <a class="nav-link " href="#">test STUDENT</a>
                     </li>
                 </ul>
+                <ul id="navbarTeacher" class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Promotion <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cours</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">test TEACHER</a>
+                        </li>
+                    </ul>
+                <form class="form-inline my-2 my-lg-0"></form>
+                <p id="nomUserMenu">   </p>
                 <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Profil</button>
-                <p>" "</p>
+                <p>__</p>
                 <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;">
+            </form>
             </div>
         </nav>
         <div  id="test">
@@ -63,6 +63,27 @@
                 document.location.href='profil.html?'         
             });
         });
+        
+        function checkCookie() {  
+            if (typeof $.cookie('LS_user') === 'undefined'){
+                alert("no cookie pls get connected ! ");
+                window.location="connexion.html?";
+            }              
+            else if (Cookies.get('LS_user')){
+                jsonUser = JSON.parse(Cookies.get('LS_user'));
+                var nom =jsonUser["name"];
+                var typeUser =jsonUser["userTypeEnum"];
+                if(typeUser=="STUDENT"){
+                    $('#navbarTeacher').toggle();
+                }else{
+                    $('#navbarStudent').toggle();
+                }
+                $('#nomUserMenu').text(nom);
+                if (nom==null){
+                alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                }
+            } 
+        }
     </script>
 </html>
     

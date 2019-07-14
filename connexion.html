@@ -61,21 +61,16 @@
                                     }
                                 }
                                 else if (xhr.status == 403){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("email et/ou mot de passe faux !" );
-                                }else if (xhr.status == 500){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("erreur serveur " );
+                                    console.log(xhr.status);                              
+                                    console.log(xhr.statusText);
+                                    console.log(xhr.text);
+                                    alert("email et/ou mot de passe faux !" );
                                 }
                                 else { 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("erreur inconnue " );
+                                    console.log(xhr.status);                              
+                                    console.log(xhr.statusText);
+                                    console.log(xhr.text);
+                                    alert("erreur" + xhr.status);
                                 }
                             }
                         }

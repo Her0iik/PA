@@ -9,18 +9,23 @@
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     </head>
-    <script>
-        function checkCookie() {  
+    <script>function checkCookie() {  
             if (typeof $.cookie('LS_user') === 'undefined'){
                 alert("no cookie pls get connected ! ");
                 window.location="connexion.html?";
             }              
             else if (Cookies.get('LS_user')){
-                jsonResponse = JSON.parse(Cookies.get('LS_user'));
-                console.log("already connected user id : "+jsonResponse["id"]);
+                jsonUser = JSON.parse(Cookies.get('LS_user'));
+                var nom =jsonUser["name"];
+                var typeUser =jsonUser["userTypeEnum"];
+                if(typeUser=="STUDENT"){
+                    $('#navbarTeacher').toggle();
+                }else{
+                    $('#navbarStudent').toggle();
+                }
+                $('#nomUserMenu').text(nom);
             } 
-        }
-    </script>
+        }</script>
     <body onLoad="checkCookie();">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="#">
@@ -30,7 +35,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
+                <ul id="navbarStudent"  class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
                     </li>
@@ -38,7 +43,18 @@
                         <a class="nav-link" href="#">Classe</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Profil</a>
+                        <a class="nav-link " href="#">test STUDENT</a>
+                    </li>
+                </ul>
+                <ul id="navbarTeacher" class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Promotion <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Cours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">test TEACHER</a>
                     </li>
                 </ul>
                 <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Profil</button>
@@ -46,8 +62,8 @@
                 <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;">
             </div>
         </nav>
-
-        <form id="profilUpdate" class="text-center" role="form" data-toggle="validator" class="form-profilUpdate">
+        <form id="profilUpdate"  role="form" data-toggle="validator" class="form-profilUpdate">
+                <h1 class="h3 mb-3 font-weight-normal">Votre compte </h1>
             <div class="form-group">
                 <input id ="nom" class="form-control" type="text" placeholder="Nom" required>
             </div>
@@ -60,29 +76,24 @@
                 <label for="inputPassword" class="sr-only">Password</label>
             </div>
             <div class="form-group">
-                <input id="pwd" type="password" id="inputPassword" class="form-control" data-minlength="6" placeholder="Mot de passe" required>
+                <input id="pwd" type="password" id="inputPassword" class="form-control" maxlength="32" minlength="8" placeholder="Mot de passe" required>
             </div>
             <div class="form-group">
                     <input id="confirmPwd" type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
                    <div id="msgError" type="hidden" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
-            <!--
-            <div class="form-check-inline">
-                <input id="student" class="form-check-input" type="radio" name="Radios" id="Radios1" value="option1" checked>
-                <label class="form-check-label" for="Radios1">Etudiant</label>
-            </div>
-            <div class="form-check-inline">
-                <input id ="teacher" class="form-check-input" type="radio" name="Radios" id="Radios2" value="option2">
-                <label class="form-check-label" for="Radios2">Professeur</label>
-            </div>   -->
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Saved</button>   
-        </form>  
+        </form> 
     </body>
     <script>
-        $(document).ready(function(){
+      
+
+        $(document).ready(function(){            
             jsonUser = JSON.parse(Cookies.get('LS_user'));
+            alert(Cookies.get('LS_user'));
             $("#nom").val(jsonUser["name"]);
             $("#prenom").val(jsonUser["surmane"]);
+            alert(jsonUser["mail"]);
             $("#email").val(jsonUser["mail"]);
             $("#logout").click(function(){
                 Cookies.remove('LS_user');
@@ -91,7 +102,7 @@
             });
             $("#profil").click(function(){
                 document.location.href='profil.html?'         
-            });
+            });         
         });
         jQuery(function($) {
             $("#profilUpdate").submit(function(e) {
@@ -109,54 +120,37 @@
                     var prenom = $("#prenom").val();
                     var typeUser = jsonUser["userTypeEnum"];
                     var idUser = jsonUser["id"];
-                    var dataJson = JSON.stringify({"mail":login,"userTypeEnum":typeUser,"name":nom,"surmane":prenom,"userPhoto":null});
+                    var dataJson = JSON.stringify({"mail":login,"password":password,"userType":typeUser,"name":nom,"surname":prenom});
                     console.log("user update :"+dataJson);         
                     e.preventDefault();
                     var jwt= Cookies.get('LS_token');
                     console.log("jwt :"+jwt);
                     var xhr = new XMLHttpRequest();
-                    xhr.open("PUT", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser, true);
+                    alert("check log");
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser+"/edit", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader("Authorization",jwt);
-                    xhr.send(JSON.stringify({"mail":login,"userTypeEnum":typeUser,"name":nom,"surmane":prenom,"userPhoto":null}));
+                    xhr.send(JSON.stringify({"mail":login,"password":password,"userType":typeUser,"name":nom,"surname":prenom}));
                     xhr.onreadystatechange = function() {
                         if(xhr.readyState == 4){
-                            if(xhr.status == 202) {
-                                console.log(xhr.responseText);
-                                alert("modification validée !" );
-                                /*
+                            if(xhr.status == 200||xhr.status == 201) {
                                 Cookies.remove('LS_user');
-                                Cookies.remove('LS_token');
-                                */
-                            }
-                            else if (xhr.status == 403){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("acces interdit " );
-                            }else if (xhr.status == 500){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("erreur serveur " );
-                            }
-                            else if (xhr.status == 405){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("erreur requete" );
+                                Cookies.set('LS_user', dataJson, {expires: 0.125});
+      
+                                alert("modification validée !" );
                             }
                             else { 
-                                console.log(xhr.status);                              
+                                console.log("status code result :"+xhr.status);                              
                                 console.log(xhr.statusText);
                                 console.log(xhr.text);
-                                alert("erreur inconnue " );
+                                alert("erreur " );
                             }
                         }
                     }; 
-                    
+                     
                 }
             });    
         });
+        
     </script>
 </html>
