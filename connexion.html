@@ -9,10 +9,7 @@
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     </head>
     <body class="text-center"> 
-
-        <form id="signin" class="form-signin">
-
-           
+        <form id="signin" class="form-signin">       
             <img class="mb-4" src="assets/logo.png" alt="" width="80" height="80">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -25,8 +22,7 @@
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>
             <!--
             <button id="inscription" type="button" class="btn btn-lg btn-outline-primary btn-block" onmouseover="changeclassName()" onclick="document.location.href='inscription.html?'">Inscription</button>
-            -->              
-                           
+            -->                                  
             <script>
                /* $(".dropdown-menu li a").click(function(){
                     $(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
@@ -35,7 +31,6 @@
                 function changeclassName() {
                     document.getElementById('validation').className="btn btn-lg btn-outline-primary btn-block";
                 }*/
-
                 jQuery(function($) {
                     $("#signin").submit(function(e) {
                         var password = $("#inputPassword").val();
@@ -88,6 +83,5 @@
                 });
             </script>
         </form>
-
     </body>
 </html>

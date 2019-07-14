@@ -8,14 +8,12 @@
         <script src="js/jquery-3.4.0.min.js"></script>
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-       
     </head>
     <script>
         function checkCookie() {  
             if (typeof $.cookie('LS_user') === 'undefined'){
                 alert("no cookie pls get connected ! ");
                 window.location="connexion.html?";
-
             }              
             else if (Cookies.get('LS_user')){
                 jsonResponse = JSON.parse(Cookies.get('LS_user'));
@@ -58,7 +56,7 @@
             </div>
             <div class="form-group">
                 <label for="inputEmail" class="sr-only">Email address</label>
-                    <input id="email" type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
                 <label for="inputPassword" class="sr-only">Password</label>
             </div>
             <div class="form-group">
@@ -77,27 +75,15 @@
                 <input id ="teacher" class="form-check-input" type="radio" name="Radios" id="Radios2" value="option2">
                 <label class="form-check-label" for="Radios2">Professeur</label>
             </div>   -->
-        
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Saved</button>   
         </form>  
     </body>
-    
     <script>
         $(document).ready(function(){
             jsonUser = JSON.parse(Cookies.get('LS_user'));
-            jsonUser[""]
-            $("#nom").attr("placeholder", jsonUser["name"]).val("").focus().blur();
-            $("#prenom").attr("placeholder", jsonUser["surmane"]).val("").focus().blur();
-            $("#email").attr("placeholder", jsonUser["mail"]).val("").focus().blur();
-            /*
-            if(jsonUser["userTypeEnum"]=="STUDENT"){
-                $('#student').attr('checked', true);
-                $('#teacher').attr('checked', false);
-            }else{
-                $('#student').attr('checked', false);
-                $('#teacher').attr('checked', true);
-            }*/
-
+            $("#nom").val(jsonUser["name"]);
+            $("#prenom").val(jsonUser["surmane"]);
+            $("#email").val(jsonUser["mail"]);
             $("#logout").click(function(){
                 Cookies.remove('LS_user');
                 Cookies.remove('LS_token');
@@ -106,21 +92,71 @@
             $("#profil").click(function(){
                 document.location.href='profil.html?'         
             });
-       });
+        });
         jQuery(function($) {
             $("#profilUpdate").submit(function(e) {
                 var password1 = $("#inputPassword").val();
                 var password2 = $("#inputPasswordConfirm").val();
                 e.preventDefault();
-                if (password1==password2) {
-                    alert("mdp ok" );
-                }else{
+                if (password1!=password2) {
                     $("#msgError").show();
                 }
-                
+                else{    
+                    jsonUser = JSON.parse(Cookies.get('LS_user'));
+                    var password = $("#inputPassword").val();
+                    var login = $("#inputEmail").val();
+                    var nom = $("#nom").val();
+                    var prenom = $("#prenom").val();
+                    var typeUser = jsonUser["userTypeEnum"];
+                    var idUser = jsonUser["id"];
+                    var dataJson = JSON.stringify({"mail":login,"userTypeEnum":typeUser,"name":nom,"surmane":prenom,"userPhoto":null});
+                    console.log("user update :"+dataJson);         
+                    e.preventDefault();
+                    var jwt= Cookies.get('LS_token');
+                    console.log("jwt :"+jwt);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("PUT", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser, true);
+                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    xhr.setRequestHeader("Authorization",jwt);
+                    xhr.send(JSON.stringify({"mail":login,"userTypeEnum":typeUser,"name":nom,"surmane":prenom,"userPhoto":null}));
+                    xhr.onreadystatechange = function() {
+                        if(xhr.readyState == 4){
+                            if(xhr.status == 202) {
+                                console.log(xhr.responseText);
+                                alert("modification validée !" );
+                                /*
+                                Cookies.remove('LS_user');
+                                Cookies.remove('LS_token');
+                                */
+                            }
+                            else if (xhr.status == 403){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("acces interdit " );
+                            }else if (xhr.status == 500){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur serveur " );
+                            }
+                            else if (xhr.status == 405){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur requete" );
+                            }
+                            else { 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur inconnue " );
+                            }
+                        }
+                    }; 
+                    
+                }
             });    
         });
-   
     </script>
 </html>
-    

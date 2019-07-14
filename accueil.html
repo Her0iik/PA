@@ -4,23 +4,19 @@
         <meta charset="utf-8">
         <title> Lightning School</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
-
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery-3.4.0.min.js"></script>
         <script src="js/js_cookie.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-       
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>   
     </head>
     <script>
         function checkCookie() {  
             if (typeof $.cookie('LS_user') === 'undefined'){
                 alert("no cookie pls get connected ! ");
                 window.location="connexion.html?";
-
             }              
             else if (Cookies.get('LS_user')){
                 jsonUser = JSON.parse(Cookies.get('LS_user'));
-                console.log("already connected user id :"+jsonUser["id"]);
                 var nom =jsonUser["name"];
                 if (nom==null){
                 alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
