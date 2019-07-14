@@ -3,65 +3,98 @@
     <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
+        <script src="js/jquery-3.4.0.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    </head>
-    <script>function checkCookie() {  
-            if (typeof $.cookie('LS_user') === 'undefined'){
-                alert("no cookie pls get connected ! ");
-                window.location="connexion.html?";
-            }              
-            else if (Cookies.get('LS_user')){
-                jsonUser = JSON.parse(Cookies.get('LS_user'));
-                var nom =jsonUser["name"];
-                var typeUser =jsonUser["userTypeEnum"];
-                if(typeUser=="STUDENT"){
-                    $('#navbarTeacher').toggle();
-                }else{
-                    $('#navbarStudent').toggle();
-                }
-                $('#nomUserMenu').text(nom);
-            } 
-        }</script>
-    <body onLoad="checkCookie();">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul id="navbarStudent"  class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Classe</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="#">test STUDENT</a>
-                    </li>
-                </ul>
-                <ul id="navbarTeacher" class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Promotion <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cours</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="#">test TEACHER</a>
-                    </li>
-                </ul>
-                <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Profil</button>
-                <p>" "</p>
-                <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;">
-            </div>
-        </nav>
+   
+        <script>
+            function checkCookie() {  
+                if (typeof $.cookie('LS_user') === 'undefined'){
+                    alert("no cookie pls get connected ! ");
+                    window.location="connexion.html?";
+                }              
+                else if (Cookies.get('LS_user')){
+                    jsonUser = JSON.parse(Cookies.get('LS_user'));
+                    var nom =jsonUser["name"];
+                    var typeUser =jsonUser["userTypeEnum"];
+                    if(typeUser=="STUDENT"){
+                        $('#navbarStudent').show();
+                    }else{
+                        $('#navbarTeacher').show();
+                    }
+                    $('#nomUserMenu').text(nom);
+                    if (nom==null){
+                    alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                    }
+                } 
+            }
+        </script>
+        <meta charset="utf-8">
+        <title> Lightning School</title>
+        <script src="js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        
+        
+        <script src="js/js_cookie.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
+        <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse" ">
+                    <ul id="navbarStudent"  class="navbar-nav mr-auto"style="display:none">
+                        <li class="nav-item active">
+                            <a id="menuCours" class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Exercice</a>
+                        </li>
+                    </ul>
+
+                    <ul id="navbarTeacher" class="navbar-nav mr-auto" style="display:none">
+                            <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Promotion
+                                  </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#">Liste de promotion</a>
+                                        <a class="dropdown-item" href="#">créer un promo</a>
+                                        <a class="dropdown-item" href="#">edit une promo</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Cours
+                                  </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#">Liste de cours</a>
+                                        <a class="dropdown-item" href="#">créer un cours</a>
+                                        <a class="dropdown-item" href="#">edit cours</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">créer exo</a>
+                                        <a class="dropdown-item" href="#">édit exo</a>
+                                </div>
+                            </li>
+                        </ul>
+                    <form class="form-inline my-2 my-lg-0"></form>
+                    <p id="nomUserMenu">   </p>
+                    <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
+                    <p>    </p>
+                    <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
+                </form>
+                </div>
+        </nav> 
+    </head>        
+    <body id="body" onLoad="checkCookie();" class="content">     
         <form id="profilUpdate"  role="form" data-toggle="validator" class="form-profilUpdate">
                 <h1 class="h3 mb-3 font-weight-normal">Votre compte </h1>
             <div class="form-group">
@@ -80,20 +113,16 @@
             </div>
             <div class="form-group">
                     <input id="confirmPwd" type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
-                   <div id="msgError" type="hidden" class="help-block" >Les deux mots de passe sont différents</div>
+                    <div id="msgError" type="hidden" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Saved</button>   
         </form> 
     </body>
     <script>
-      
-
         $(document).ready(function(){            
             jsonUser = JSON.parse(Cookies.get('LS_user'));
-            alert(Cookies.get('LS_user'));
             $("#nom").val(jsonUser["name"]);
             $("#prenom").val(jsonUser["surmane"]);
-            alert(jsonUser["mail"]);
             $("#email").val(jsonUser["mail"]);
             $("#logout").click(function(){
                 Cookies.remove('LS_user');
@@ -126,7 +155,6 @@
                     var jwt= Cookies.get('LS_token');
                     console.log("jwt :"+jwt);
                     var xhr = new XMLHttpRequest();
-                    alert("check log");
                     xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser+"/edit", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader("Authorization",jwt);
