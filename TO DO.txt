@@ -4,4 +4,6 @@
 -charger les exo / cours /promo
 -résoudre exo 
 -modifier le profil
+-ajouter la suppression de compte
+-ajouter gtpr
 
