@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <title> Lightning School</title>
+        <script src="js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+        <script src="js/js_cookie.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> 
+    </nav> 
+
+    </head>
+
+
+    <body class="text-center"> 
+        <form id="promoCreation" class="form">       
+            <h1 class="h3 mb-3 font-weight-normal">Création de promo</h1>
+            <label for="promoLabel" class="sr-only">Nom de la promotion</label>
+            <input type="text" id="promoLabel"  placeholder="AL 1" required>
+            <label for="promoYear" class="sr-only">Année de promotion</label>
+            <input type="number" id="promoYear"  placeholder="2019" required>
+            <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>                                          
+        </form>       
+    </body>
+    <script>
+        jQuery(function($) {
+            $("#promoCreation").submit(function(e) {
+                var label = $("#promoLabel").val();
+                var year = $("#promoYear").val();
+                e.preventDefault();
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                xhr.send(JSON.stringify({"mail" : login, "password" : password}));
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4){
+                        if(xhr.status == 202) {
+                            var jwt =xhr.getResponseHeader("Authorization");   
+                            var expireTimer = 0.125;
+                            var user=xhr.responseText;                               
+                            var jsonUser = JSON.parse(user);
+                        }
+                        else { 
+                            console.log(xhr.status);                              
+                            console.log(xhr.statusText);
+                            console.log(xhr.text);
+                            alert("erreur" + xhr.status);
+                        }
+                    }
+                }
+            });    
+        });
+    </script>
+</html>
