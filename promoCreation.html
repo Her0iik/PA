@@ -1,6 +1,7 @@
+
+
 <!DOCTYPE html>
-<html> 
-    <head>
+<html>  <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
         <script src="js/jquery-3.4.0.min.js"></script>
@@ -9,39 +10,78 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
         <script src="js/js_cookie.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> 
-    </nav> 
-
-    </head>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+ </head>
 
 
-    <body class="text-center"> 
+
+    <body class="text-center" > 
+
+            <div id="header">
+                    <!-- Content will be inserted by jQuery from header.html -->
+            </div>
         <form id="promoCreation" class="form">       
             <h1 class="h3 mb-3 font-weight-normal">Création de promo</h1>
             <label for="promoLabel" class="sr-only">Nom de la promotion</label>
             <input type="text" id="promoLabel"  placeholder="AL 1" required>
             <label for="promoYear" class="sr-only">Année de promotion</label>
-            <input type="number" id="promoYear"  placeholder="2019" required>
+            <input id="promoYear"  placeholder="2019" required>
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>                                          
         </form>       
     </body>
+    
+    <script> 
+    function checkCookie() {  
+                    if (typeof $.cookie('LS_user') === 'undefined'){
+                        alert("pls connect you ! ");
+                        window.location="connexion.html?";
+                    }              
+                    else if (Cookies.get('LS_user')){
+                        jsonUser = JSON.parse(Cookies.get('LS_user'));
+                        var prenom =jsonUser["surname"];
+                        var typeUser =jsonUser["userTypeEnum"];
+                        alert("checkCookie in promo Creation : userType :"+typeUser);
+                        if(typeUser=="STUDENT"){
+                            $('#navbarStudent').show();
+                        }else{
+                            $('#navbarTeacher').show();
+                        }
+                        if (prenom!=null){
+                            $('#nomUserMenu').text(prenom);
+                        }
+                    } 
+                }
+
+        $(document).ready(function(){ 
+            $.get("header.html", function(data) {
+                $("#header").html(data);
+            });
+            checkCookie();
+            }); 
+        </script> 
+        <script>
+                
+            </script>
     <script>
         jQuery(function($) {
             $("#promoCreation").submit(function(e) {
-                var label = $("#promoLabel").val();
-                var year = $("#promoYear").val();
+                var promoLabel = $("#promoLabel").val();
+                var promoYear = $("#promoYear").val();
+                jsonUser = JSON.parse(Cookies.get('LS_user'));
+                var userId = jsonUser["id"];
+                alert(userId);
                 e.preventDefault();
+                var jwt= Cookies.get('LS_token');
+                console.log("jwt :"+jwt);
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
+                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo", true);
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                xhr.send(JSON.stringify({"mail" : login, "password" : password}));
+                xhr.setRequestHeader("Authorization",jwt);
+                xhr.send(JSON.stringify({"promotionYear" : promoYear, "sectionLabel" : promoLabel ,"teacherId" : userId}));
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4){
-                        if(xhr.status == 202) {
-                            var jwt =xhr.getResponseHeader("Authorization");   
-                            var expireTimer = 0.125;
-                            var user=xhr.responseText;                               
-                            var jsonUser = JSON.parse(user);
+                        if(xhr.status == 201) {                               
+                            alert("succes");
                         }
                         else { 
                             console.log(xhr.status);                              

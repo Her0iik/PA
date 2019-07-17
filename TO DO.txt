@@ -1,9 +1,11 @@
 -get user avec promotion
-- créer les page exo / cours pour eleve
+-créer les page exo / cours pour eleve
 -créer page promo / cours / exo pour prof
 -charger les exo / cours /promo
 -résoudre exo 
--modifier le profil
--ajouter la suppression de compte
--ajouter gtpr
+-ajouter la suppression de compte ( avec vérfi , voulez vous vraiment supp acc )
+-ajouter gtpr ( première connexion si possible  ) 
+
+- corriger le bug du menu au chargement 
+-extract les header et script dans une page script 
 

@@ -34,7 +34,7 @@
                                   </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="#">Liste de promotion</a>
-                                        <a class="dropdown-item" href="#">créer un promo</a>
+                                        <a class="dropdown-item" href="promoCreation.html">créer un promo</a>
                                         <a class="dropdown-item" href="#">edit une promo</a>
                                 </div>
                             </li>
@@ -64,37 +64,60 @@
         </nav> 
     </head>
     
-    <body id="body" onLoad="checkCookie();" class="content">
+    <body id="body" onLoad="checkCookie();" class="content"><!--
         <div  id="test" class="inner-div">
-            <button id="testUser" type="button" class="btn btn-primary">Primary</button></div>
+            <button id="testUser" type="button" class="btn btn-primary">Primary</button></div>-->
+
+  
+                <button id="testUser" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>                                          
+                c
     </body>
     <script>
         $(document).ready(function(){
+
+            $("#promoCreation").submit(function(e) {
+                var promoLabel = $("#promoLabel").val();
+                var promoYear = $("#promoYear").val();
+                e.preventDefault();
+                var jwt= Cookies.get('LS_token');
+                console.log("jwt :"+jwt);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo", true);
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                xhr.setRequestHeader("Authorization",jwt);
+                xhr.send(JSON.stringify({"promotionYear" : promoYear, "sectionLabel" : promoLabel}));
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4){
+                        if(xhr.status == 201) {                               
+                            alert("succes");
+                        }
+                        else { 
+                            console.log(xhr.status);                              
+                            console.log(xhr.statusText);
+                            console.log(xhr.text);
+                            alert("erreur" + xhr.status);
+                        }
+                    }
+                }
+            });    
+
             $("#testUser").click(function(){             
                     jsonUser = JSON.parse(Cookies.get('LS_user'));
                     var idUser = jsonUser["id"];
                     var jwt= Cookies.get('LS_token');
                     console.log("user id :"+idUser);                              
                     console.log("user jwt :"+jwt);
-                    alert("test1");
                     var xhr2 = new XMLHttpRequest();
-                    alert("test2");
-                    
                     xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
-                    alert("test3");
                     xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    alert("test4");
                     xhr2.setRequestHeader('Authorization',jwt);
-                    alert("test5");
+                    xhr2.send();
                     xhr2.onreadystatechange = function() {
-                        alert("test6");
                         if (xhr2.readyState == 4){
-                            alert("test7");
                             if(xhr2.status == 202 ||xhr2.status == 200) {
-                                console.log(xhr2.response);
-                                console.log(xhr2.text);
                                 console.log(xhr2.responseText);
                                 alert("succes" );
+
                             }
                             else if (xhr2.status == 403){ 
                                 console.log(xhr2.status);                              
@@ -140,7 +163,7 @@
                     $('#nomUserMenu').text("Welcome " +prenom);
                 
                 }else{
-                    alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+                  //  alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
                 }
             } 
         }

@@ -1,0 +1,55 @@
+
+    <header>
+    <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse" ">
+            <ul id="navbarStudent"  class="navbar-nav mr-auto"style="display:none">
+                <li class="nav-item active">
+                    <a id="menuCours" class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Exercice</a>
+                </li>
+            </ul>
+
+            <ul id="navbarTeacher" class="navbar-nav mr-auto" style="display:none">
+                    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Promotion
+                          </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Liste de promotion</a>
+                                <a class="dropdown-item" href="promoCreation.html">créer un promo</a>
+                                <a class="dropdown-item" href="#">edit une promo</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cours
+                          </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Liste de cours</a>
+                                <a class="dropdown-item" href="#">créer un cours</a>
+                                <a class="dropdown-item" href="#">edit cours</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">créer exo</a>
+                                <a class="dropdown-item" href="#">édit exo</a>
+                        </div>
+                    </li>
+                </ul>
+            <form class="form-inline my-2 my-lg-0"></form>
+            <button id="nomUserMenu" type="button" class="btn btn-dark btn-lg" disabled> </button>
+            <p> </p>
+            <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
+            <p>    </p>
+            <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
+        </form>
+        </div>
+</nav>  
+</header> 
