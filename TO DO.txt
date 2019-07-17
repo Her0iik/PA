@@ -1,11 +1,10 @@
 -get user avec promotion
 -créer les page exo / cours pour eleve
 -créer page promo / cours / exo pour prof
--charger les exo / cours /promo
--résoudre exo 
--ajouter la suppression de compte ( avec vérfi , voulez vous vraiment supp acc )
+-charger les exo / cours /promo 
+-add redirection acceuil ( add welcome on Lightning School + slogan ) 
 -ajouter gtpr ( première connexion si possible  ) 
 
 - corriger le bug du menu au chargement 
--extract les header et script dans une page script 
+(-extract les header et script dans une page script)
 
