@@ -4,9 +4,6 @@
 -charger les exo / cours /promo 
 -ajouter gtpr ( première connexion si possible  ) 
 
-(-extract les header et script dans une page script)
-!! problème log out / profil quand importe le header
--> cf promo/edit
 
 
 ERROR :
