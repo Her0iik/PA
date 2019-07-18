@@ -18,39 +18,14 @@
                 <!-- Content will be inserted by jQuery from /header/. -->
         </div>
         <div  id="test" class="content">
-            <button id="testUser" type="button" class="btn btn-primary">Primary</button>
+            <!-- <button id="testUser" type="button" class="btn btn-primary">Primary</button> -->
         </div>        
     </body>
     <script>
         $(document).ready(function(){
             checkCookie();
             loadHeader();
-            checkProfil();
-            $("#promoCreation").submit(function(e) {
-                var promoLabel = $("#promoLabel").val();
-                var promoYear = $("#promoYear").val();
-                e.preventDefault();
-                var jwt= Cookies.get('LS_token');
-                console.log("jwt :"+jwt);
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo", true);
-                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                xhr.setRequestHeader("Authorization",jwt);
-                xhr.send(JSON.stringify({"promotionYear" : promoYear, "sectionLabel" : promoLabel}));
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4){
-                        if(xhr.status == 201) {                               
-                            alert("succes");
-                        }
-                        else { 
-                            console.log(xhr.status);                              
-                            console.log(xhr.statusText);
-                            console.log(xhr.text);
-                            alert("erreur" + xhr.status);
-                        }
-                    }
-                }
-            });    
+            checkProfil();    
         });
     </script>
 </html>

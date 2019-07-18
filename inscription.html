@@ -13,7 +13,7 @@
         <form id="inscription" role="form" data-toggle="validator" class="form-inscription">
             <img class="mb-4" src="assets/logo.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Créer un compte </h1>
-            
+
             <div class="form-group">
                 <label for="inputEmail" class="sr-only">Email address</label>
                     <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
@@ -47,7 +47,6 @@
     <script>
         $('input:radio[name="inlineRadioOptions"]').change(function() {
             if ($(this).val() == 'STUDENT') {
-                
                 $('#promotion').show();
             } else {
                 $('#promotion').hide();
@@ -118,7 +117,7 @@
                     xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser, "sectionID" : promoId}));
+                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser, "sectionId" : promoId}));
                     xhr.onreadystatechange = function() {
                         if(xhr.readyState == 4){
                             if(xhr.status == 201) {
