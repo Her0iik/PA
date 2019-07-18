@@ -15,8 +15,10 @@ function checkCookie() {
         }
         
 function loadHeader(){
+    alert("loadHeader func ")
     jsonUser = JSON.parse(Cookies.get('LS_user'));
     var typeUser =jsonUser["userTypeEnum"];
+    alert("typeUser " +typeUser )
     if(typeUser=="STUDENT"){
         $.get("http://localhost/pa/header/headerStudent.html", function(data) {
             $("#header").html(data);
