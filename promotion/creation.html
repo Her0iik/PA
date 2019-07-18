@@ -4,23 +4,21 @@
 <html>  <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
-        <script src="../js/jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/style.css">
+        <script src="http://localhost/pa/js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="http://localhost/pa/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://localhost/pa/css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
-        <script src="../js/js_cookie.js"></script>
+        <script src="http://localhost/pa/js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="http://localhost/pa/js/app.js"></script>
  </head>
-
-
-
     <body class="text-center" > 
 
             <div id="header">
                     <!-- Content will be inserted by jQuery from header.html -->
             </div>
-        <form id="promoCreation" class="form">       
+        <form id="promoCreation" class="content">       
             <h1 class="h3 mb-3 font-weight-normal">Création de promo</h1>
             <label for="promoLabel" class="sr-only">Nom de la promotion</label>
             <input type="text" id="promoLabel"  placeholder="AL 1" required>
@@ -29,40 +27,10 @@
             <button id="validation" type="submit" class="btn btn-lg btn-primary btn-block" >Validation</button>                                          
         </form>       
     </body>
-    
-    <script> 
-    function checkCookie() {  
-                    if (typeof $.cookie('LS_user') === 'undefined'){
-                        alert("pls connect you ! ");
-                        window.location="connexion.html?";
-                    }              
-                    else if (Cookies.get('LS_user')){
-                        jsonUser = JSON.parse(Cookies.get('LS_user'));
-                        var prenom =jsonUser["surname"];
-                        var typeUser =jsonUser["userTypeEnum"];
-                       
-                        if (prenom!=null){
-                            $('#nomUserMenu').text(prenom);
-                        }
-                    } 
-            }
-
+    <script>   
         $(document).ready(function(){ 
-           checkCookie();
-           jsonUser = JSON.parse(Cookies.get('LS_user'));
-           var typeUser =jsonUser["userTypeEnum"];
-            if(typeUser=="STUDENT"){
-                $.get("http://localhost/pa/headerStudent.html", function(data) {
-                    $("#header").html(data);
-                });
-            }else{
-                $.get("http://localhost/pa/headerTeacher.html", function(data) {
-                    $("#header").html(data);
-                });
-            }
-        }); 
-
-        jQuery(function($) {
+            checkCookie();
+            loadHeader();
             $("#promoCreation").submit(function(e) {
                 var promoLabel = $("#promoLabel").val();
                 var promoYear = $("#promoYear").val();

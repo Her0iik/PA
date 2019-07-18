@@ -10,83 +10,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <script>
-            function checkCookie() {  
-                if (typeof $.cookie('LS_user') === 'undefined'){
-                    alert("pls connect you ! ");
-                    window.location="connexion.html?";
-                }              
-                else if (Cookies.get('LS_user')){
-                    jsonUser = JSON.parse(Cookies.get('LS_user'));
-                    var prenom =jsonUser["surname"];
-                    var typeUser =jsonUser["userTypeEnum"];
-                    if(typeUser=="STUDENT"){
-                        $('#navbarStudent').show();
-                    }else{
-                        $('#navbarTeacher').show();
-                    }
-                    if (prenom!=null){
-                        $('#nomUserMenu').text(prenom);
-                    }
-                } 
-            }
-        </script>
-        <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#">
-                    <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="accueil.html"> Lightning School
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse" ">
-                    <ul id="navbarStudent"  class="navbar-nav mr-auto"style="display:none">
-                        <li class="nav-item active">
-                            <a id="menuCours" class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Exercice</a>
-                        </li>
-                    </ul>
+        <script src="http://localhost/pa/js/app.js"></script>
+    </head>
 
-                    <ul id="navbarTeacher" class="navbar-nav mr-auto" style="display:none">
-                            <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Promotion
-                                  </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Liste de promotion</a>
-                                        <a class="dropdown-item" href="#">créer un promo</a>
-                                        <a class="dropdown-item" href="#">edit une promo</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Cours
-                                  </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Liste de cours</a>
-                                        <a class="dropdown-item" href="#">créer un cours</a>
-                                        <a class="dropdown-item" href="#">edit cours</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">créer exo</a>
-                                        <a class="dropdown-item" href="#">édit exo</a>
-                                </div>
-                            </li>
-                        </ul>
-                    <form class="form-inline my-2 my-lg-0"></form>
-                   
-                    
-                    <button id="nomUserMenu" type="button" class="btn btn-dark btn-lg" disabled> </button>
-                    <p> </p>
-                    <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
-                    <p>    </p>
-                    <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
-                </form>
-                </div>
-        </nav> 
-    </head>        
-    <body id="body" onLoad="checkCookie();" class="content">     
+    <body id="body" class="content">     
         <form id="profilUpdate"  role="form" data-toggle="validator" class="form-profilUpdate">
                 <h1 class="h3 mb-3 font-weight-normal">Votre compte </h1>
             <div class="form-group">
@@ -128,8 +55,12 @@
                   </div>
         </form> 
     </body>
+
     <script>
-        $(document).ready(function(){            
+        $(document).ready(function(){  
+            checkCookie();
+            loadHeader();
+
             jsonUser = JSON.parse(Cookies.get('LS_user'));
             $("#nom").val(jsonUser["name"]);
             $("#prenom").val(jsonUser["surmane"]);

@@ -13,6 +13,7 @@
         <form id="inscription" role="form" data-toggle="validator" class="form-inscription">
             <img class="mb-4" src="assets/logo.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Créer un compte </h1>
+            
             <div class="form-group">
                 <label for="inputEmail" class="sr-only">Email address</label>
                     <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
@@ -25,24 +26,75 @@
                     <input type="password" id="inputPasswordConfirm" class="form-control" data-match="#inputPassword" data-match-error="mot de passe différents !" placeholder="Confirme mot de passe" required>
                     <div id="msgError" class="help-block" >Les deux mots de passe sont différents</div>
             </div>
-            <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="RadioStudent" id="RadioStudent" value="option1" checked>
-                <label class="form-check-label" for="RadioStudent">Etudiant</label>
-            </div>
-            <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="Radio2" id="Radio2" value="option2">
-                <label class="form-check-label" for="Radio2">Professeur</label>
-            </div>             
+
+            <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioStudent" value="STUDENT" required>
+                    <label class="form-check-label" for="inlineRadioStudent">Etudiant</label>
+                  </div>
+            <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioTeacher" value="TEACHER">
+                    <label class="form-check-label" for="inlineRadioTeacher">Professeur</label>
+            </div>   
+            
+            <div id="promotion" style="display:none"class="form-group">
+                    <select  id="selectPromo" class="form-control" required>
+                    </select>
+                </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block" >Submit</button>   
             <button id="retour" type="button" class="btn btn-link">Retour</button>
         </form> 
     </body>
     <script>
+        $('input:radio[name="inlineRadioOptions"]').change(function() {
+            if ($(this).val() == 'STUDENT') {
+                
+                $('#promotion').show();
+            } else {
+                $('#promotion').hide();
+            }
+        });
         $( "#retour" ).click(function() {
             Cookies.remove('LS_user_admin');
             Cookies.remove('LS_token_admin');
             document.location.href='connexion.html?'
         });
+
+        $(document).ready(function(){
+            var jwt= Cookies.get('LS_token_admin');                              
+            console.log("user jwt :"+jwt);
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo", true);
+            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr2.setRequestHeader('Authorization',jwt);
+            xhr2.send();
+            xhr2.onreadystatechange = function() {
+                if (xhr2.readyState == 4){
+                    if(xhr2.status == 202 ||xhr2.status == 200) {
+                        var reuslt = xhr2.responseText;
+                        jsonresult = JSON.parse(reuslt);  
+                        var option = '';
+                        for (var i=0;i<jsonresult.length;i++){
+                        option += '<option value="'+ jsonresult[i]["sectionId"]+ '">' + jsonresult[i]["sectionLabel"] +" "+ jsonresult[i]["promotionYear"] + '</option>';
+                        //console.log("liste promotion :"+jsonresult[i]["sectionLabel"] +" "+ jsonresult[i]["promotionYear"]);
+                        }
+                        $('#selectPromo').append(option);           
+                    }
+                    else if (xhr2.status == 403){ 
+                        console.log(xhr2.status);                              
+                        console.log(xhr2.statusText);
+                        console.log(xhr2.text);
+                        alert("interdit" );
+                    }
+                    else { 
+                        console.log(xhr2.status);                              
+                        console.log(xhr2.statusText);
+                        console.log(xhr2.text);
+                        alert("erreur" + xhr2.status);
+                    }
+                }
+            }        
+        });
+
         jQuery(function($) {
             $("#inscription").submit(function(e) {
                 var password1 = $("#inputPassword").val();
@@ -54,8 +106,10 @@
                 else{                  
                     var password = $("#inputPassword").val();
                     var login = $("#inputEmail").val();
+                    var promoId =$("#selectPromo").val();
+                    alert ("ID promotion choose :"+promoId);
                     var typeUser ;
-                    if($('#RadioStudent').is(':checked')){typeUser="STUDENT";}
+                    if($('#inlineRadioStudent').is(':checked')){typeUser="STUDENT";}
                     else{typeUser="TEACHER";}
                     e.preventDefault();
                     var jwt= Cookies.get('LS_token_admin');
@@ -64,7 +118,7 @@
                     xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser}));
+                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser, "sectionID" : promoId}));
                     xhr.onreadystatechange = function() {
                         if(xhr.readyState == 4){
                             if(xhr.status == 201) {

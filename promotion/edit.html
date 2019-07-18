@@ -1,129 +1,93 @@
-
-
-
 <!DOCTYPE html>
-<html>  <head>
+<html>  
+    <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
-        <script src="../js/jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/style.css">
+        <script src="http://localhost/pa/js/app.js"></script>
+        <script src="http://localhost/pa/js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="http://localhost/pa/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://localhost/pa/css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
-        <script src="../js/js_cookie.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
- </head>
+        <script src="http://localhost/pa/js/js_cookie.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>     
+    </head>
 
+    <body class="text-center" class="content"> 
 
+        <div id="header">
+                <!-- Content will be inserted by jQuery from header.html -->
+        </div>
 
-    <body class="text-center" > 
+        <div  id="content" class="content">
+            <table class="table table-hover" id="display">
+                <thead>
+                    <tr>
+                    <th>classe</th>
+                    <th>promo</th>
+                    <th>etudiant</th>            
+                    <th>cours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <!-- Content will be inserted from JSON with API -->
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
 
-            <div id="header">
-                    <!-- Content will be inserted by jQuery from header.html -->
-            </div>
-            <div  id="content" class="inner-div">
-                    <table class="table table-hover" id="display">
-                            <thead>
-                              <tr>
-                                <th>classe</th>
-                                <th>promo</th>
-                                <th>etudiant</th>            
-                                <th>cours</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <!-- Content will be inserted from JSON with API -->
-                              </tr>
-                            </tbody>
-                          </table>
-
-              </div>
-
-               
     </body>
     
     <script> 
-    function checkCookie() {  
-                    if (typeof $.cookie('LS_user') === 'undefined'){
-                        alert("pls connect you ! ");
-                        window.location="connexion.html?";
-                    }              
-                    else if (Cookies.get('LS_user')){
-                        jsonUser = JSON.parse(Cookies.get('LS_user'));
-                        var prenom =jsonUser["surname"];
-                        var typeUser =jsonUser["userTypeEnum"];
-                       
-                        if (prenom!=null){
-                            $('#nomUserMenu').text(prenom);
-                        }
-                    } 
-            }
+        $(document).ready(function(){   
+            checkCookie();
+            loadHeader();
 
-        $(document).ready(function(){ 
-           checkCookie();
-           jsonUser = JSON.parse(Cookies.get('LS_user'));
-           var typeUser =jsonUser["userTypeEnum"];
-            if(typeUser=="STUDENT"){
-                $.get("http://localhost/pa/headerStudent.html", function(data) {
-                    $("#header").html(data);
-                });
-            }else{
-                $.get("http://localhost/pa/headerTeacher.html", function(data) {
-                    $("#header").html(data);
-                });
-            }
-        }); 
-
-       
-    </script>
-     <script> 
-         $(document).ready(function(){         
-                    jsonUser = JSON.parse(Cookies.get('LS_user'));
-                    var idUser = jsonUser["id"];
-                    var jwt= Cookies.get('LS_token');
-                    console.log("user id :"+idUser);                              
-                    console.log("user jwt :"+jwt);
-                    var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
-                    xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    xhr2.setRequestHeader('Authorization',jwt);
-                    xhr2.send();
-                    xhr2.onreadystatechange = function() {
-                        if (xhr2.readyState == 4){
-                            if(xhr2.status == 202 ||xhr2.status == 200) {
-                                console.log(xhr2.responseText);
-                                User = JSON.parse(xhr2.responseText);
-                                //alert("succes" );
-                                var User = JSON.parse(xhr2.responseText);
-                                var sections = User.sections
-                                console.log(sections);
-                                sections.forEach(function (m/*, index */){
-                                    var ligne = $("<tr></tr>");
-                                    ligne.append($("<td>" + m.sectionLabel + "</td>"));
-                                    ligne.append($("<td>" + m.promotionYear + "</td>"));
-                                    ligne.append($("<td>" + m.users + "</td>"));
-                                    ligne.append($("<td>" + m.cours + "</td>"));
-                                    $("tbody").append(ligne);
-                                })
-
-                            }
-                            else if (xhr2.status == 403){ 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("interdit" );
-                            }
-                            else { 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("erreur" + xhr2.status);
-                            }
-                        }
+            jsonUser = JSON.parse(Cookies.get('LS_user'));
+            var idUser = jsonUser["id"];
+            var jwt= Cookies.get('LS_token');
+            console.log("user id :"+idUser);                              
+            console.log("user jwt :"+jwt);
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
+            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr2.setRequestHeader('Authorization',jwt);
+            xhr2.send();
+            xhr2.onreadystatechange = function() {
+                if (xhr2.readyState == 4){
+                    if(xhr2.status == 202 ||xhr2.status == 200) {
+                        console.log(xhr2.responseText);
+                        User = JSON.parse(xhr2.responseText);
+                        //alert("succes" );
+                        var User = JSON.parse(xhr2.responseText);
+                        var sections = User.sections
+                        console.log(sections);
+                        sections.forEach(function (m/*, index */){
+                            var ligne = $("<tr></tr>");
+                            ligne.append($("<td>" + m.sectionLabel + "</td>"));
+                            ligne.append($("<td>" + m.promotionYear + "</td>"));
+                            ligne.append($("<td>" + m.users + "</td>"));
+                            ligne.append($("<td>" + m.cours + "</td>"));
+                            $("tbody").append(ligne);
+                        })
                     }
-            });
-        </script>
+                    else if (xhr2.status == 403){ 
+                        console.log(xhr2.status);                              
+                        console.log(xhr2.statusText);
+                        console.log(xhr2.text);
+                        alert("interdit" );
+                    }
+                    else { 
+                        console.log(xhr2.status);                              
+                        console.log(xhr2.statusText);
+                        console.log(xhr2.text);
+                        alert("erreur" + xhr2.status);
+                    }
+                }
+            }
+        });
+    </script>
 </html>
 
 

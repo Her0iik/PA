@@ -2,9 +2,13 @@
 -créer les page exo / cours pour eleve
 -créer page promo / cours / exo pour prof
 -charger les exo / cours /promo 
--add redirection acceuil ( add welcome on Lightning School + slogan ) 
 -ajouter gtpr ( première connexion si possible  ) 
 
-- corriger le bug du menu au chargement 
 (-extract les header et script dans une page script)
+!! problème log out / profil quand importe le header
+-> cf promo/edit
+
+
+ERROR :
+a vérifier profil chargement des données
 

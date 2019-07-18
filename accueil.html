@@ -3,77 +3,29 @@
     <head>
         <meta charset="utf-8">
         <title> Lightning School</title>
-        <script src="js/jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <script src="http://localhost/pa/js/app.js"></script>
+        <script src="http://localhost/pa/js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="http://localhost/pa/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://localhost/pa/css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
-        <script src="js/js_cookie.js"></script>
+        <script src="http://localhost/pa/js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
-        <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#">
-                    <img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Lightning School
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse" ">
-                    <ul id="navbarStudent"  class="navbar-nav mr-auto"style="display:none">
-                        <li class="nav-item active">
-                            <a id="menuCours" class="nav-link" href="#">Cours <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Exercice</a>
-                        </li>
-                    </ul>
-
-                    <ul id="navbarTeacher" class="navbar-nav mr-auto" style="display:none">
-                            <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Promotion
-                                  </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="http://localhost/pa/promotion/creation.html">Créer un promo</a>
-                                    <a class="dropdown-item" href="http://localhost/pa/promotion/edit.html">Edit une promo</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Cours
-                                  </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Liste de cours</a>
-                                        <a class="dropdown-item" href="#">créer un cours</a>
-                                        <a class="dropdown-item" href="#">edit cours</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">créer exo</a>
-                                        <a class="dropdown-item" href="#">édit exo</a>
-                                </div>
-                            </li>
-                        </ul>
-                    <form class="form-inline my-2 my-lg-0"></form>
-                    <button id="nomUserMenu" type="button" class="btn btn-dark btn-lg" disabled> </button>
-                    <p> </p>
-                    <button id="profil" class="btn btn-outline-primary my-2 my-sm-0" type="submit" >Profil</button>
-                    <p>    </p>
-                    <img id="logout" src="assets/logout.png" width="30" height="30" class="d-inline-block align-top" alt="" style="cursor: pointer;" >
-                </form>
-                </div>
-        </nav> 
+       
     </head>
-    
-    <body id="body" onLoad="checkCookie();" class="content">
-        <div  id="test" class="inner-div">
-            <button id="testUser" type="button" class="btn btn-primary">Primary</button></div>
-
-  
-                                                        
-                
+    <body id="body" class="content">
+        <div id="header">
+                <!-- Content will be inserted by jQuery from /header/. -->
+        </div>
+        <div  id="test" class="content">
+            <button id="testUser" type="button" class="btn btn-primary">Primary</button>
+        </div>        
     </body>
     <script>
         $(document).ready(function(){
-
+            checkCookie();
+            loadHeader();
+            checkProfil();
             $("#promoCreation").submit(function(e) {
                 var promoLabel = $("#promoLabel").val();
                 var promoYear = $("#promoYear").val();
@@ -99,73 +51,7 @@
                     }
                 }
             });    
-
-            $("#testUser").click(function(){             
-                    jsonUser = JSON.parse(Cookies.get('LS_user'));
-                    var idUser = jsonUser["id"];
-                    var jwt= Cookies.get('LS_token');
-                    console.log("user id :"+idUser);                              
-                    console.log("user jwt :"+jwt);
-                    var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
-                    xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    xhr2.setRequestHeader('Authorization',jwt);
-                    xhr2.send();
-                    xhr2.onreadystatechange = function() {
-                        if (xhr2.readyState == 4){
-                            if(xhr2.status == 202 ||xhr2.status == 200) {
-                                console.log(xhr2.responseText);
-                                alert("succes" );
-
-                            }
-                            else if (xhr2.status == 403){ 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("interdit" );
-                            }
-                            else { 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("erreur" + xhr2.status);
-                            }
-                        }
-                    }
-            });
-            $("#logout").click(function(){
-                Cookies.remove('LS_user');
-                Cookies.remove('LS_token');
-                document.location.href='connexion.html?'
-            });
-            $("#profil").click(function(){
-                document.location.href='profil.html?'         
-            });
         });
-        
-        function checkCookie() {  
-            if (typeof $.cookie('LS_user') === 'undefined'){
-                alert("no cookie pls get connected ! ");
-                window.location="connexion.html?";
-            }              
-            else if (Cookies.get('LS_user')){
-                jsonUser = JSON.parse(Cookies.get('LS_user'));
-                var prenom =jsonUser["surmane"];
-                var typeUser =jsonUser["userTypeEnum"];
-                if(typeUser=="STUDENT"){
-                    $('#navbarStudent').show();
-                }else{
-                    $('#navbarTeacher').show();
-                }
-                
-                if (prenom!=null){
-                    $('#nomUserMenu').text("Welcome " +prenom);
-                
-                }else{
-                  //  alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
-                }
-            } 
-        }
     </script>
 </html>
     
