@@ -48,5 +48,6 @@ function checkProfil() {
     
     }else{
         //alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+        // can add redirection on profil + accept the GRPD
     }
 }
