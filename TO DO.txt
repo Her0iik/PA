@@ -1,7 +1,6 @@
--get user avec promotion
 -créer les page exo / cours pour eleve
--créer page promo / cours / exo pour prof
--charger les exo / cours /promo 
+-créer page  / cours / exo pour prof
+-charger les exo / cours  
 -ajouter gtpr ( première connexion si possible  ) 
 
 
@@ -11,3 +10,15 @@ a vérifier profil chargement des données ( email + mdp )
 supp error post
 
 
+
+
+Lundi :	DL : 16h
+
+Mardi :	PA : 12h
+
+Jeudi :	iOS : 10h 
+	Agile : 11h40 
+	Toeic : 14h30
+
+Vendr : JEE : 11h
+	Archi : 15h30
