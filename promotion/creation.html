@@ -44,7 +44,6 @@
                 var promoYear = $("#promoYear").val();
                 jsonUser = JSON.parse(Cookies.get('LS_user'));
                 var userId = jsonUser["id"];
-                alert(userId);
                 e.preventDefault();
                 var jwt= Cookies.get('LS_token');
                 console.log("jwt :"+jwt);
