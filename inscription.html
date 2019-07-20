@@ -95,6 +95,27 @@
         });
 
         jQuery(function($) {
+
+            function linkUserPromo(aUserId, aPromoId){
+                var xhr3 = new XMLHttpRequest();
+                xhr3.open("PUT", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo/edit", true);
+                xhr3.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                var jwt= Cookies.get('LS_token_admin');
+                xhr3.setRequestHeader('Authorization',jwt);
+                xhr3.send(JSON.stringify({"id" : aPromoId,"userIds" : [aUserId]}));
+                xhr3.onreadystatechange = function() {
+                    if(xhr3.readyState == 4){
+                        if(xhr3.status == 201 || xhr3.status == 200 || xhr3.status == 202) {  
+                            alert("ajout du student a la promo succes")
+                        } else { 
+                            console.log(xhr3.status);                              
+                            console.log(xhr3.statusText);
+                            console.log(xhr3.text);
+                            alert("erreur inconnue " );
+                        }
+                    }
+                };                         
+            }
             $("#inscription").submit(function(e) {
                 var password1 = $("#inputPassword").val();
                 var password2 = $("#inputPasswordConfirm").val();
@@ -106,7 +127,7 @@
                     var password = $("#inputPassword").val();
                     var login = $("#inputEmail").val();
                     var promoId =$("#selectPromo").val();
-                    alert ("ID promotion choose :"+promoId);
+                    alert ("sectionId :"+promoId);
                     var typeUser ;
                     if($('#inlineRadioStudent').is(':checked')){typeUser="STUDENT";}
                     else{typeUser="TEACHER";}
@@ -117,26 +138,32 @@
                     xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser, "sectionId" : promoId}));
+                    xhr.send(JSON.stringify({"mail" : login, "password" : password, "typeUser" : typeUser}));
                     xhr.onreadystatechange = function() {
                         if(xhr.readyState == 4){
-                            if(xhr.status == 201) {
-                                console.log(xhr.responseText);
-                                alert("création succes !" );
-                                Cookies.remove('LS_user_admin');
-                                Cookies.remove('LS_token_admin');
-                                window.location="connexion.html?";
+                            if(xhr.status == 201) {                               
+                                console.log("création succes ! responText :" + xhr.responseText);
+                                var jsonUser = JSON.parse(xhr.responseText);
+                                var userId = jsonUser["id"];
+                                alert("Compte créé !");                               
+                                if(typeUser="STUDENT"){
+                                    alert ("link user: "+userId+" with promo id :"+promoId);
+                                    linkUserPromo(userId, promoId);       
+                                }
+                                //Cookies.remove('LS_user_admin');
+                                //Cookies.remove('LS_token_admin');
+                               // window.location="connexion.html?";
                             }
                             else if (xhr.status == 403){ 
                                 console.log(xhr.status);                              
                                 console.log(xhr.statusText);
                                 console.log(xhr.text);
                                 alert("acces interdit " );
-                            }else if (xhr.status == 500){ 
+                            }else if (xhr.status == 400){ 
                                 console.log(xhr.status);                              
                                 console.log(xhr.statusText);
                                 console.log(xhr.text);
-                                alert("erreur serveur " );
+                                alert("adresse email déja utilisé !" );
                             }
                             else { 
                                 console.log(xhr.status);                              

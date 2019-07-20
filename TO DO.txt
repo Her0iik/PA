@@ -7,5 +7,7 @@
 
 
 ERROR :
-a vérifier profil chargement des données
+a vérifier profil chargement des données ( email + mdp )
+supp error post
+
 
