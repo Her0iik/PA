@@ -69,7 +69,11 @@
                     var coursLabel =$("#coursLabel").val();
                     var deadline =$("#deadline").val();
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours", true);
+                    var params = {"coursLabel":coursLabel,"deadline":deadline,"sectionsIds":promoIds};
+                    console.log("params :"+params);
+                    var str = jQuery.param( params );
+                    console.log("str :"+str);
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?coursLabel=testCours1&deadline2019-07-07&sectionsIds=%5B6%5D", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
                     /*var bodyRequest ;
@@ -79,9 +83,11 @@
                         bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
                     }
                     xhr.send(bodyRequest);
-    */
-
-                    xhr.send(JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds}));
+           
+                    var  bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
+                     ​var query = jQuery.param(bodyRequest);   */   
+                     
+                    xhr.send();
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
                             if(xhr.status == 201 ||xhr.status == 200) {
