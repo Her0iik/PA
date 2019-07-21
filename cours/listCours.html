@@ -117,14 +117,10 @@
                 }
                });
 
-
-            jsonUser = JSON.parse(Cookies.get('LS_user'));
-            var idUser = jsonUser["id"];
-            var jwt= Cookies.get('LS_token');
-            console.log("user id :"+idUser);                              
+            var jwt= Cookies.get('LS_token');                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
+            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();
@@ -132,11 +128,12 @@
                 if (xhr2.readyState == 4){
                     if(xhr2.status == 202 ||xhr2.status == 200) {
                         console.log(xhr2.responseText);
+                        /*
                         User = JSON.parse(xhr2.responseText);
                         var User = JSON.parse(xhr2.responseText);
                         var sections = User.sections
                         console.log(sections);
-                        sections.forEach(function (m/*, index */){
+                        sections.forEach(function (m){
                             var ligne = $('<tr id="'+ m.sectionId+'"></tr>');
                             ligne.append($("<td>" + m.sectionLabel + "</td>"));
                             ligne.append($("<td>" + m.promotionYear + "</td>"));
@@ -144,7 +141,7 @@
                             //ligne.append($("<td>" + m.cours + "</td>"));
                             $("#body1").append(ligne);
                             
-                        })
+                        })*/
                        // $('#table-2').createTable(sections, {}); 
                     }
                     else if (xhr2.status == 403){ 
