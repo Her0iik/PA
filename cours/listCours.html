@@ -36,67 +36,65 @@
                 </tbody>    
             
             </table>
-        </div> <!-- 
-        <div  id="contentStudent" class="content2"style="display: block;"> 
-            <h3 id="tabStudent" class="h3 mb-3 font-weight-normal"></h3>
-            <table class="table table-striped" id="student" >
+        </div> 
+
+        <div  id="contentExo" class="content2"style="display: block;"> 
+            <h3 id="tabExo" class="h3 mb-3 font-weight-normal"></h3>
+            <table class="table table-striped" id="Exo" >
                 <thead>
-                    <tr id="menuTabStudent" class="table-primary" style="display: none;">
-                        <th>mail</th>
-                        <th>nom</th>
-                        <th>prénom</th>            
+                    <tr id="menuTabExo" class="table-primary" style="display: none;">
+                        <th>Nom</th>
+                        <th>Support</th>
+                        <th>Coef</th>            
                     </tr>
                 </thead>
                 <tbody id="body2">
-                    Content will be inserted call API whne click on 1st table row
+                     <!-- Content will be inserted call API when click on 1st table row-->
                 </tbody>
             </table>
         </div>
--->
+
     </body>
+     <!--Add 3th table for the media list -->
     
     <script> 
         $(document).ready(function(){   
             checkCookie();
             loadHeader();
+            var arrayCours;
 
             $('#cours').on('click','tr', function() { 
-                var idPromo = $(this).attr('id');
-                if(idPromo){
+                var idCours = $(this).attr('id');
+                if(idCours){
                     var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/promo/id/"+idPromo, true);
+                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours/id/"+idCours, true);
                     xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr2.setRequestHeader('Authorization',jwt);
                     xhr2.send();
                     xhr2.onreadystatechange = function() {
                         if (xhr2.readyState == 4){
                             if(xhr2.status == 202 ||xhr2.status == 200) {
-                                listCours = JSON.parse(xhr2.responseText);
-
-/*  ADD TABleau MEDIA / ou tableau exo
-                                console.log(promo);
-                                $("#tabStudent").text("exercie du cours "+ promo["sectionLabel"]+" "+promo["promotionYear"]);
-                                $("#menuTabStudent").show();
-                                console.log(promo["users"][0]);
-                                console.log(promo.users);
-                                usersArray = promo.users;
+                                cours = JSON.parse(xhr2.responseText);
+                                console.log(cours);
+                                $("#tabExo").text("Exo : ");
+                                $("#menuTabExo").show();
+                                console.log(cours.exercices);
+                                exoArray = cours.exercices;
                                 $("#body2").empty();
-                                usersArray.forEach(function (m){
-                                    var name="n/a", surname="n/a";
-                                    if(m.name){
-                                        name=m.name
-                                    }
-                                    if(m.surname){
-                                        surname=m.surname
-                                    }
-                                    console.log(m.mail);
+                                exoArray.forEach(function (m/*, index */){
+                                    console.log(m);
+                                    if(m.exerciceTypeId==1){ 
+                                    var exoPath="";
+                                    if(m.exercicePath){
+                                        exoPath=m.exercicePath;
+                                    }                               
                                     var ligne = $("<tr </tr>");
-                                    ligne.append($("<td>" + m.mail + "</td>"));
-                                    ligne.append($("<td>" + name + "</td>"));
-                                    ligne.append($("<td>" + surname + "</td>"));
-                                    $("#body2").append(ligne);
+                                    ligne.append($("<td>" + m.exerciceLabel + "</td>"));
+                                    ligne.append($("<td>" + exoPath + "</td>"));
+                                    ligne.append($("<td>" + m.coeficient + "</td>"));
+                                    $("#body2").append(ligne); }
 
-                                });           */             
+                                });                        
                             // $('#table-2').createTable(sections, {}); 
                             }
                             else if (xhr2.status == 403){ 
@@ -128,15 +126,23 @@
             xhr2.onreadystatechange = function() {
                 if (xhr2.readyState == 4){
                     if(xhr2.status == 202 ||xhr2.status == 200) {
-                        console.log(xhr2.responseText);
-                        var arrayCours = JSON.parse(xhr2.responseText);
+                        console.log("respond api call 1:"+xhr2.responseText);
+                        arrayCours = JSON.parse(xhr2.responseText);
                         console.log(arrayCours);
                         arrayCours.forEach(function (m){
-                            var ligne = $('<tr id="'+ m.sectionId+'"></tr>');
+                            var support;
+                            if(m.linkCours){
+                                support= m.linkCours;
+                            }else{
+                                support="";
+                            }
+                            var ligne = $('<tr id="'+ m.coursId+'"></tr>');
                             ligne.append($("<td>" + m.coursLabel + "</td>"));
                             ligne.append($("<td>" + m.deadline[2]+"/"+m.deadline[1]+"/"+m.deadline[0]+" - "+m.deadline[3] +":"+ m.deadline[4]+"</td>"));
-                           // ligne.append($("<td>" + m.users + "</td>"));
-                            //ligne.append($("<td>" + m.cours + "</td>"));
+                            ligne.append($("<td>" + support +"</td>"));
+                            ligne.append($("<td>" +  "</td>"));     
+                            // créer un fonction call GET/api/users/id/{userId} pârcour les fonction et si
+                            //  section.cours.coursId = tr.id alors add dans le td section.sectionLabel + section.sectionYear
                             $("#body1").append(ligne);
                             
                         })

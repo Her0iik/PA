@@ -1,7 +1,7 @@
 -créer les page exo / cours pour eleve
--créer page / exo pour prof 
+-add creatExo page TEACHER
 -ajouter gtpr ( première connexion si possible  ) 
-
+-afficher la liste des promo d'un cours
 
 -ajouter medias dans creatCours  
 -créer fichier variable avec tous les path + changer header avec les varriables 
