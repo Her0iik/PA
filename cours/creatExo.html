@@ -19,23 +19,20 @@
 
         <form id="creatExo" role="form" data-toggle="validator" class="form-inscription">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Créer un exercice</h1>
-        
+            <p> </p>
             <div class="form-group">
                 <label for="exoLabel" >Nom de l'exercice :</label>
                 <input type="text" class="form-control" id="exoLabel" required>
             </div>
             <div class="form-group">
                 <label for="coefExo">Coeficient :</label>
-               <input id="coefExo" type="number" class="form-control" required>
+               <input id="coefExo" type="number" class="form-control" min="0" max="20"required>
             </div>
 
             <div class="form-group">
                 <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Choisir un cours : </label>
                 <select class="custom-select my-1 mr-sm-2" id="selectCours" required>
                         <!-- Content will be inserted by jQuery from call API -->
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-
                 </select>
             </div>
 
@@ -54,37 +51,36 @@
         $(document).ready(function(){
             checkCookie();
             loadHeader();
-            $("#creatExo").submit(function(e) {             
-                    var promoIds = promoIds.map(Number);
+            $("#creatExo").submit(function(e) {
+                e.preventDefault();             
                     var jwt= Cookies.get('LS_token');                              
                     console.log("user jwt :"+jwt);
                     var coef =$("#coefExo").val();
                     var exoLabel =$("#exoLabel").val();
-                    var coursId =$("#selectCours").val();
+                    var coursId =parseInt($("#selectCours option:selected").val());
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours/exercices/", true);
+                    xhr.open("POST", "Http://api.mtrembley.fr/api/cours/exercices", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    xhr.send(JSON.stringify({"coeficient" : courscoefLabel , "coursId" : coursId , "exerciceLabel ": promexoLabeloIds})); 
-                    xhr.send();
+                    var data = JSON.stringify({"coeficient" : coef , "coursId" : coursId , "exerciceLabel" : exoLabel});
+                    xhr.send(data); 
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
-                            if(xhr.status == 201 ||xhr.status == 200) {
-                                console.log(xhr.responseText);
-                                User = JSON.parse(xhr.responseText);
+                            if(xhr.status =201) {
+                                console.log("rep succes :"+xhr.responseText);
                                 alert("Création de l'exercice validé !" );                       
                             }
-                            else if (xhr2.status == 403){ 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("interdit" );
+                            else if (xhr.status == 403){ 
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("interdit 403" );
                             }
                             else { 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("erreur status :" + xhr2.status);
+                                console.log(xhr.status);                              
+                                console.log(xhr.statusText);
+                                console.log(xhr.text);
+                                alert("erreur status :" + xhr.status);
                             }
                         }
                     }
@@ -98,7 +94,7 @@
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser+"/cours", true);
+            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();
@@ -108,9 +104,11 @@
                         console.log("respond api call 1:"+xhr2.responseText);
                         arrayCours = JSON.parse(xhr2.responseText);
                         console.log(arrayCours);
+                        $("#selectCours").empty();
                         arrayCours.forEach(function (m){
-                            m.coursLabel    // ADD it to select
-                            
+                            // ADD it to select
+                            var ligne = $("<option value="+m.coursId+">"+m.coursLabel+"</option>");
+                            $("#selectCours").append(ligne);  
                         })
                     }
                     else if (xhr2.status == 403){ 

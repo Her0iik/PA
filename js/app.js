@@ -1,3 +1,6 @@
+
+
+
 function checkCookie() {  
             if (typeof $.cookie('LS_user') === 'undefined'){
                 window.location="http://localhost/pa/connexion.html?";

@@ -1,20 +1,22 @@
 -créer les page exo / cours pour eleve
--add creatExo page TEACHER
--ajouter gtpr ( première connexion si possible  ) 
--afficher la liste des promo d'un cours
+-ajouter gtpr (test pas nom -> rediriger profil -> ask accept rgpd + liens ou popup DL) 
 -resoudre exo
 
 
--ajouter medias dans creatCours  
+-ajouter medias dans creatCours + dans affiche cour 
 -créer fichier variable avec tous les path + changer header avec les varriables 
--profil : retirer les commentaire 
-
 
 ERROR :
 a vérifier profil chargement des données ( email + mdp )
-+ UPDATE PROFIL
-
++ UPDATE PROFIL à tester si fonctionne 
 
 + mettre tous les script dans des pages.js ? 
 + RELIR tout les // + /* */ + console.log + alert si les delet ?
++ delet bouton page exo dans accueil
+
+
+
+
+C'est quoi la route pour tester si un exo est valide ou pas ? 
+Et qaund on recup la liste des exo  d'un student y a moyen de voir les quelles sont déjà validé ? 
 

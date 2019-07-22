@@ -23,40 +23,31 @@
             <style>
             #draggable { width: 150px; height: 150px; padding: 0.5em; }
             </style>
-            <link rel="stylesheet" href="http://localhost/pa/css/jquery-ui.css">
+            <link rel="stylesheet" href="http://localhost/pa/css/jquery-ui.min.css">
             <script>
             $( function() {
-                $( "#draggable" ).draggable();
+                $( "#ampoule" ).draggable();
+                $( "#and" ).draggable();
+                $( "#or" ).draggable();
             } );
             </script>
             </head>
             <body>
-            
-            <div id="draggable" class="ui-widget-content">
-                    <img class="document"
-                    src="assets/ampoule.png">
-            </div>
-            
-            
-            </body>
-            </html>
-            
-            <div class="container">            
-                <div class="trash">
-
+            <div class="box"> 
+                <div id="ampoule" class="ui-widget-content">
+                        <img class="document"
+                        src="assets/ampoule.png">
                 </div>
-                <img class="document"
-                     src="assets/ampoule.png">
-                <img class="document"
-                     src="assets/and.png">
-                <img class="document"
-                     src="assets/interrupteuron.png">
-                <img class="document"
-                     src="assets/or.png">
-            
-              </div>
-            
-             
+                <div id="and" class="ui-widget-content">
+                        <img class="document"
+                        src="assets/and.png">
+                </div>
+                <div id="or" class="ui-widget-content">
+                        <img class="document"
+                        src="assets/or.png">
+                </div>
+            </div>
+                      
     </body>
     <script>
         $(document).ready(function(){

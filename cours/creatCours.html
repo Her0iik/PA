@@ -17,7 +17,7 @@
             <!-- Content will be inserted by jQuery from /header/. -->
         </div>
 
-        <form id="creatPromo" role="form" data-toggle="validator" class="form-inscription">
+        <form id="creatPromo" name="creatPromo" role="form" data-toggle="validator" class="form-inscription">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Créer un cours</h1>
         
             <div class="form-group">
@@ -69,22 +69,16 @@
                     var xhr = new XMLHttpRequest();
                     var params = {"coursLabel":coursLabel,"deadline":deadline,"sectionsIds":promoIds};
                     console.log("params :"+params);
-                    var str = jQuery.param( params );
-                    console.log("str :"+str);
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?coursLabel=testCours1&deadline2019-07-07&sectionsIds=%5B6%5D", true);
-                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+                    var form = document.forms.namedItem("creatPromo");
+                    var oData = new FormData(document.forms.namedItem("creatPromo"));
+                    console.log(oData);
+                    //var str = jQuery.param( params );
+                   // console.log("str :"+str);
+                    //xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?coursLabel=testCours1&deadline2019-07-07&sectionsIds=%5B6%5D", true);
+                  /*    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    /*var bodyRequest ;
-                    if(coursFile){
-                        bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds , "cours" : coursFile});
-                    }else{
-                        bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
-                    }
-                    xhr.send(bodyRequest);
-           
-                    var  bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
-                     ​var query = jQuery.param(bodyRequest);   */   
-                     
+                   
                     xhr.send();
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
@@ -106,7 +100,8 @@
                                 alert("erreur status :" + xhr2.status);
                             }
                         }
-                    }
+                    } */   
+                     
                 }
             }); 
 
