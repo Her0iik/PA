@@ -149,7 +149,7 @@
                     console.log("Delet jwt :"+jwt);
                     console.log("Delet idUser :"+idUser);
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser+"/delete", true);
+                    xhr.open("DELETE", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/"+idUser+"/delete", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader("Authorization",jwt);
                     xhr.send(JSON.stringify({"userId":idUser}));

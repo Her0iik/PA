@@ -5,9 +5,8 @@
 
 -ajouter medias dans creatCours  
 -créer fichier variable avec tous les path + changer header avec les varriables 
-
+-profil : retirer les commentaire 
 
 ERROR :
 a vérifier profil chargement des données ( email + mdp )
-suppression error post-> delete
 

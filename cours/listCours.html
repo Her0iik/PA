@@ -22,7 +22,7 @@
 
         <div  id="content"class="content2" >
             <h1 class="h3 mb-3 font-weight-normal">Liste des cours :</h1>
-            <table class="table table-hover" id="promo" style="cursor: pointer;">
+            <table class="table table-hover" id="cours" style="cursor: pointer;">
                 <thead>
                     <tr class="table-primary">
                         <th>Nom</th>
@@ -31,10 +31,8 @@
                         <th>Promotion</th>
                     </tr>
                 </thead>
-                <tbody id="body1">
-                  
+                <tbody id="body1">           
                     <!-- Content will be inserted from call API -->
-                    
                 </tbody>    
             
             </table>
@@ -62,8 +60,7 @@
             checkCookie();
             loadHeader();
 
-            $('#promo').on('click','tr', function() {
-               
+            $('#cours').on('click','tr', function() { 
                 var idPromo = $(this).attr('id');
                 if(idPromo){
                     var xhr2 = new XMLHttpRequest();
@@ -74,15 +71,17 @@
                     xhr2.onreadystatechange = function() {
                         if (xhr2.readyState == 4){
                             if(xhr2.status == 202 ||xhr2.status == 200) {
-                                promo = JSON.parse(xhr2.responseText);
+                                listCours = JSON.parse(xhr2.responseText);
+
+/*  ADD TAB MEDIA
                                 console.log(promo);
-                                $("#tabStudent").text("Elèves de "+ promo["sectionLabel"]+" "+promo["promotionYear"]);
+                                $("#tabStudent").text("exercie du cours "+ promo["sectionLabel"]+" "+promo["promotionYear"]);
                                 $("#menuTabStudent").show();
                                 console.log(promo["users"][0]);
                                 console.log(promo.users);
                                 usersArray = promo.users;
                                 $("#body2").empty();
-                                usersArray.forEach(function (m/*, index */){
+                                usersArray.forEach(function (m){
                                     var name="n/a", surname="n/a";
                                     if(m.name){
                                         name=m.name
@@ -97,7 +96,7 @@
                                     ligne.append($("<td>" + surname + "</td>"));
                                     $("#body2").append(ligne);
 
-                                });                        
+                                });           */             
                             // $('#table-2').createTable(sections, {}); 
                             }
                             else if (xhr2.status == 403){ 
