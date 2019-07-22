@@ -10,17 +10,53 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
         <script src="http://localhost/pa/js/js_cookie.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="http://localhost/pa/js/jquery-ui.min.js"></script> 
+         
        
     </head>
     <body id="body" class="content">
         <div id="header">
                 <!-- Content will be inserted by jQuery from /header/. -->
         </div>
-        <div  id="test" class="content">
-            <!-- <button id="testUser" type="button" class="btn btn-primary">Primary</button> -->
+          
+            <style>
+            #draggable { width: 150px; height: 150px; padding: 0.5em; }
+            </style>
+            <link rel="stylesheet" href="http://localhost/pa/css/jquery-ui.css">
+            <script>
+            $( function() {
+                $( "#draggable" ).draggable();
+            } );
+            </script>
+            </head>
+            <body>
             
-        </div>        
+            <div id="draggable" class="ui-widget-content">
+                    <img class="document"
+                    src="assets/ampoule.png">
+            </div>
+            
+            
+            </body>
+            </html>
+            
+            <div class="container">            
+                <div class="trash">
+
+                </div>
+                <img class="document"
+                     src="assets/ampoule.png">
+                <img class="document"
+                     src="assets/and.png">
+                <img class="document"
+                     src="assets/interrupteuron.png">
+                <img class="document"
+                     src="assets/or.png">
+            
+              </div>
+            
+             
     </body>
     <script>
         $(document).ready(function(){
