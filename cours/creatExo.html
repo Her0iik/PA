@@ -17,27 +17,33 @@
             <!-- Content will be inserted by jQuery from /header/. -->
         </div>
 
-        <form id="creatPromo" role="form" data-toggle="validator" class="form-inscription">
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Créer un cours</h1>
+        <form id="creatExo" role="form" data-toggle="validator" class="form-inscription">
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Créer un exercice</h1>
         
             <div class="form-group">
-                <label for="promoLabel" >Nom du cours :</label>
-                <input type="text" class="form-control" id="coursLabel" required>
+                <label for="exoLabel" >Nom de l'exercice :</label>
+                <input type="text" class="form-control" id="exoLabel" required>
             </div>
             <div class="form-group">
-                <label for="deadline">Deadline :</label>
-               <input id="deadline" type="datetime-local" class="form-control" required>
-                <!--<input id="deadline" type="datetime-local" form-control" required>-->
+                <label for="coefExo">Coeficient :</label>
+               <input id="coefExo" type="number" class="form-control" required>
             </div>
-            <div id ="divPromo"class="form-group">
-                <label for="promoYear">Promotion :</label >
-                <p id="msgError" style="display: none; color: crimson" >Selectionnez au moins une promotion !</p>
-                <!-- Content will be inserted by jQuery from call API -->
+
+            <div class="form-group">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Choisir un cours : </label>
+                <select class="custom-select my-1 mr-sm-2" id="selectCours" required>
+                        <!-- Content will be inserted by jQuery from call API -->
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+
+                </select>
             </div>
+
+            <!--  ADD path exo
             <div class="form-group">
                 <label for="formControlFile">Support de cours :</label>
                 <input type="file" class="form-control-file" id="formControlFile">
-            </div>
+            </div>-->
             <div class="form-group">
                 <button id="validation" class="btn btn-lg btn-primary btn-block" >Validation</button>
             </div>
@@ -48,50 +54,25 @@
         $(document).ready(function(){
             checkCookie();
             loadHeader();
-            $("#creatPromo").submit(function(e) {
-                var promoIds = [];
-                //get all id checked
-                $("#divPromo input[type=checkbox]:checked").each(function() {
-                    promoIds.push($(this).attr("id"));
-                   
-                });
-                if (promoIds.length === 0) {
-                    e.preventDefault();
-                    $("#msgError").show();
-                }
-                else {          e.preventDefault(); 
-                    var promoIds = promoIds.map(Number); //Output: [1,2,3]
+            $("#creatExo").submit(function(e) {             
+                    var promoIds = promoIds.map(Number);
                     var jwt= Cookies.get('LS_token');                              
                     console.log("user jwt :"+jwt);
-                    var coursFile =$("#formControlFile").val();
-                    var coursLabel =$("#coursLabel").val();
-                    var deadline =$("#deadline").val();
+                    var coef =$("#coefExo").val();
+                    var exoLabel =$("#exoLabel").val();
+                    var coursId =$("#selectCours").val();
                     var xhr = new XMLHttpRequest();
-                    var params = {"coursLabel":coursLabel,"deadline":deadline,"sectionsIds":promoIds};
-                    console.log("params :"+params);
-                    var str = jQuery.param( params );
-                    console.log("str :"+str);
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?coursLabel=testCours1&deadline2019-07-07&sectionsIds=%5B6%5D", true);
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours/exercices/", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    /*var bodyRequest ;
-                    if(coursFile){
-                        bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds , "cours" : coursFile});
-                    }else{
-                        bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
-                    }
-                    xhr.send(bodyRequest);
-           
-                    var  bodyRequest =JSON.stringify({"coursLabel" : coursLabel , "deadline" : deadline , "sectionsIds ": promoIds});
-                     ​var query = jQuery.param(bodyRequest);   */   
-                     
+                    xhr.send(JSON.stringify({"coeficient" : courscoefLabel , "coursId" : coursId , "exerciceLabel ": promexoLabeloIds})); 
                     xhr.send();
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
                             if(xhr.status == 201 ||xhr.status == 200) {
                                 console.log(xhr.responseText);
                                 User = JSON.parse(xhr.responseText);
-                                alert("succes" );                       
+                                alert("Création de l'exercice validé !" );                       
                             }
                             else if (xhr2.status == 403){ 
                                 console.log(xhr2.status);                              
@@ -107,7 +88,7 @@
                             }
                         }
                     }
-                }
+                
             }); 
 
             // Load promo in form
@@ -117,23 +98,19 @@
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
+            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser+"/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();
             xhr2.onreadystatechange = function() {
                 if (xhr2.readyState == 4){
                     if(xhr2.status == 202 ||xhr2.status == 200) {
-                        console.log(xhr2.responseText);
-                        User = JSON.parse(xhr2.responseText);
-                        var User = JSON.parse(xhr2.responseText);
-                        var sections = User.sections
-                        console.log(sections);
-                        sections.forEach(function (m/*, index */){
-                            var ligne = $('<div id="checkboxdiv'+m.sectionId+'" class="custom-control custom-checkbox mr-sm-2">');
-                            ligne.append($('<input type="checkbox" class="custom-control-input" id="' + m.sectionId + '">'));
-                            ligne.append($('<label class="custom-control-label" for="' +m.sectionId + '">      '+m.sectionLabel+" "+m.promotionYear+'</label>'));
-                            $("#divPromo").append(ligne);
+                        console.log("respond api call 1:"+xhr2.responseText);
+                        arrayCours = JSON.parse(xhr2.responseText);
+                        console.log(arrayCours);
+                        arrayCours.forEach(function (m){
+                            m.coursLabel    // ADD it to select
+                            
                         })
                     }
                     else if (xhr2.status == 403){ 
@@ -150,6 +127,7 @@
                     }
                 }
             }
+
         });
     </script>
 </html>

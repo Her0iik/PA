@@ -2,11 +2,19 @@
 -add creatExo page TEACHER
 -ajouter gtpr ( première connexion si possible  ) 
 -afficher la liste des promo d'un cours
+-resoudre exo
+
 
 -ajouter medias dans creatCours  
 -créer fichier variable avec tous les path + changer header avec les varriables 
 -profil : retirer les commentaire 
 
+
 ERROR :
 a vérifier profil chargement des données ( email + mdp )
++ UPDATE PROFIL
+
+
++ mettre tous les script dans des pages.js ? 
++ RELIR tout les // + /* */ + console.log + alert si les delet ?
 
