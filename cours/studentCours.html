@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="utf-8">
+        <title> Lightning School</title>
+        <script src="http://localhost/pa/js/app.js"></script>
+        <script src="http://localhost/pa/js/jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="http://localhost/pa/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://localhost/pa/css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+        <script src="http://localhost/pa/js/js_cookie.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>  
+        <script src="http://localhost/pa/js/JSON-to-Table.min.1.0.0.js"></script>   
+    </head>
+
+    <body class="text-center" class="content"> 
+
+        <div id="header">
+                <!-- Content will be inserted by jQuery from header.html -->
+        </div>
+
+        <div  id="content"class="content2" >
+            <h1 class="h3 mb-3 font-weight-normal">Liste des cours :</h1>
+            <table class="table table-hover" id="cours" style="cursor: pointer;">
+                <thead>
+                    <tr class="table-primary">
+                        <th>Nom</th>
+                        <th>Deadline</th>
+                        <th>Support</th>
+                    </tr>
+                </thead>
+                <tbody id="body1">           
+                    <!-- Content will be inserted from call API -->
+                </tbody>    
+            
+            </table>
+        </div> 
+
+        <div  id="contentExo" class="content2"style="display: block;"> 
+            <h3 id="tabExo" class="h3 mb-3 font-weight-normal"></h3>
+            <table class="table table-striped" id="Exo" >
+                <thead>
+                    <tr id="menuTabExo" class="table-primary" style="display: none;">
+                        <th>Nom</th>
+                        <!-- <th>Support</th>-->
+                        <th>Coef</th>            
+                    </tr>
+                </thead>
+                <tbody id="body2">
+                     <!-- Content will be inserted call API when click on 1st table row-->
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+     <!--Add 3th table for the media list -->
+    
+    <script> 
+        $(document).ready(function(){   
+            checkCookie();
+            loadHeader(); 
+/*
+            $('#cours').on('click','tr', function() { 
+                var idCours = $(this).attr('id');
+                if(idCours){
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours/id/"+idCours, true);
+                    xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    xhr2.setRequestHeader('Authorization',jwt);
+                    xhr2.send();
+                    xhr2.onreadystatechange = function() {
+                        if (xhr2.readyState == 4){
+                            if(xhr2.status == 202 ||xhr2.status == 200) {
+                                cours = JSON.parse(xhr2.responseText);
+                                console.log(cours);
+                                $("#tabExo").text("Exo : ");
+                                $("#menuTabExo").show();
+                                console.log(cours.exercices);
+                                exoArray = cours.exercices;
+                                $("#body2").empty();
+                                exoArray.forEach(function (m){
+                                    console.log(m);
+                                    if(m.exerciceTypeId==1){ 
+                                    var exoPath="";
+                                    if(m.exercicePath){
+                                        exoPath=m.exercicePath;
+                                    }                               
+                                    var ligne = $("<tr </tr>");
+                                    ligne.append($("<td>" + m.exerciceLabel + "</td>"));
+                                   // ligne.append($("<td>" + exoPath + "</td>"));
+                                    ligne.append($("<td>" + m.coeficient + "</td>"));
+                                    $("#body2").append(ligne); }
+
+                                });                        
+                            // $('#table-2').createTable(sections, {}); 
+                            }
+                            else if (xhr2.status == 403){ 
+                                console.log(xhr2.status);                              
+                                console.log(xhr2.statusText);
+                                console.log(xhr2.text);
+                                alert("interdit" );
+                            }
+                            else { 
+                                console.log(xhr2.status);                              
+                                console.log(xhr2.statusText);
+                                console.log(xhr2.text);
+                                alert("erreur" + xhr2.status);
+                            }
+                        }
+                    }
+                }
+               });*/
+            jsonUser = JSON.parse(Cookies.get('LS_user'));
+            var idUser = jsonUser["id"];
+            var jwt= Cookies.get('LS_token');
+            console.log("user id :"+idUser);                              
+            console.log("user jwt :"+jwt);
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser+"/promo", true);
+            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr2.setRequestHeader('Authorization',jwt);
+            xhr2.send();
+            xhr2.onreadystatechange = function() {
+                if (xhr2.readyState == 4){
+                    if(xhr2.status == 202 ||xhr2.status == 200) {
+                        console.log("respond api call 1:"+xhr2.responseText);
+                        user = JSON.parse(xhr2.responseText);
+                        console.log(user);
+                        console.log(user.sections);
+
+                        /*
+                        arrayCours.forEach(function (m){
+                            var support;
+                            if(m.linkCours){
+                                support= m.linkCours;
+                            }else{
+                                support="";
+                            }
+                            var ligne = $('<tr id="'+ m.coursId+'"></tr>');
+                            ligne.append($("<td>" + m.coursLabel + "</td>"));
+                            ligne.append($("<td>" + m.deadline[2]+"/"+m.deadline[1]+"/"+m.deadline[0]+" - "+m.deadline[3] +":"+ m.deadline[4]+"</td>"));
+                            ligne.append($("<td>" + support +"</td>"));
+                            ligne.append($("<td>" +  "</td>"));     
+                            // créer un fonction call GET/api/users/id/{userId} pârcour les fonction et si
+                            //  section.cours.coursId = tr.id alors add dans le td section.sectionLabel + section.sectionYear
+                            $("#body1").append(ligne);
+                            
+                        })*/
+                       // $('#table-2').createTable(sections, {}); 
+                    }
+                    else if (xhr2.status == 403){ 
+                        console.log(xhr2.status);                              
+                        alert("403 : interdit" );
+                    }
+                    else { 
+                        console.log(xhr2.status);                              
+                        alert("erreur code : " + xhr2.status);
+                    }
+                }
+            }
+
+           
+
+        });
+    </script>
+</html>
+
+
+
+
+
+
+

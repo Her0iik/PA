@@ -104,12 +104,13 @@
                 xhr3.onreadystatechange = function() {
                     if(xhr3.readyState == 4){
                         if(xhr3.status == 201 || xhr3.status == 200 || xhr3.status == 202) {  
-                            alert("ajout du student a la promo succes")
+                            alert("ajout de l'étudiant à la promo réussi")
+                            console.log(xhr3.statusText);
                         } else { 
                             console.log(xhr3.status);                              
                             console.log(xhr3.statusText);
                             console.log(xhr3.text);
-                            alert("erreur inconnue " );
+                            alert("impossible de lier l'étudiant et la promotion " );
                         }
                     }
                 };                         
@@ -125,7 +126,6 @@
                     var password = $("#inputPassword").val();
                     var login = $("#inputEmail").val();
                     var promoId =$("#selectPromo").val();
-                    alert ("sectionId :"+promoId);
                     var typeUser ;
                     if($('#inlineRadioStudent').is(':checked')){typeUser="STUDENT";}
                     else{typeUser="TEACHER";}
@@ -145,7 +145,7 @@
                                 var userId = jsonUser["id"];
                                 alert("Compte créé !");                               
                                 if(typeUser="STUDENT"){
-                                    alert ("link user: "+userId+" with promo id :"+promoId);
+                                    //alert ("link user: "+userId+" with promo id :"+promoId);
                                     linkUserPromo(userId, promoId);       
                                 }
                                 //Cookies.remove('LS_user_admin');

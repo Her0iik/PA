@@ -68,17 +68,12 @@
                     var deadline =$("#deadline").val();
                     var xhr = new XMLHttpRequest();
                     var params = {"coursLabel":coursLabel,"deadline":deadline,"sectionsIds":promoIds};
-                    console.log("params :"+params);
-
-                    var form = document.forms.namedItem("creatPromo");
-                    var oData = new FormData(document.forms.namedItem("creatPromo"));
-                    console.log(oData);
-                    //var str = jQuery.param( params );
-                   // console.log("str :"+str);
-                    //xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?coursLabel=testCours1&deadline2019-07-07&sectionsIds=%5B6%5D", true);
-                  /*    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                    xhr.setRequestHeader('Authorization',jwt);
-                   
+                    console.log("params :"+params);          
+                    var str = jQuery.param( params );
+                    console.log("str :"+str);
+                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?"+str, true);
+                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                    xhr.setRequestHeader('Authorization',jwt);              
                     xhr.send();
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
@@ -100,7 +95,7 @@
                                 alert("erreur status :" + xhr2.status);
                             }
                         }
-                    } */   
+                    }   
                      
                 }
             }); 
