@@ -28,7 +28,7 @@
                         <th>Nom</th>
                         <th>Deadline</th>
                         <th>Support</th>
-                        <th>Promotion</th>
+                        <!-- <th>Promotion</th>-->
                     </tr>
                 </thead>
                 <tbody id="body1">           
@@ -186,9 +186,8 @@
                                                     }
                                                 }
                                             }*/
-                            ligne.append($("<td>" +listePromo + "</td>"));
-                            $("#body1").append(ligne);                             
-                                   
+                            //ligne.append($("<td>" +listePromo + "</td>"));
+                            $("#body1").append(ligne);                                                     
                         })
                     }
                     else if (xhr2.status == 403){ 
