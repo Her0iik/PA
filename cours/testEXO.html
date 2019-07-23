@@ -43,18 +43,22 @@
                // $( "#ampoule" ).draggable( {helper: clone ,opacity:0.8});
                 $( "#and" ).draggable();
                 $( "#or" ).draggable();
-                $(".bouger").draggable({revert:true,helper:"clone"}) ;
+                $(".bouger").draggable() ;
 
                 $(".deposer").droppable({
                     drop:function(event, ui){
-                    alert("OK, image déposée");
+                    
                     }});
             } );
+
+            $("#box").sortable({connectWith: "#droppable"});
+
+            $("#droppable").sortable({connectWith: "#box"});
             </script>
       
                 
                 <div id="exo" class="col-sm-3 three-div pull-left"> 
-                            <h3 style="text-align: center"> Test</h3> 
+                            <h3 style="text-align: center"> Exercice 1</h3> 
 
                             <p style  style="text-align: justify;">
                                     Babel is a design pattern that provides client and coherent APIs. Despite the client and Cordova is a social network programming styles using observable streams. HTTP as individual keystrokes. SJSJ is a JavaScript implementation in a static type of the exact class of the content, for transferring data fetching. Object Model DOM is a cross-platform runtime environment for Node.
@@ -68,14 +72,15 @@
                     <div id="ampoule" class="ui-widget-content bouger">
                             <img class="document" src="assets/ampoule.png">
                     </div>
-                    <div id="and" class="ui-widget-content">
+                    <div id="and" class="ui-widget-content bouger">
                             <img class="document" src="assets/and.png">
                     </div>
-                    <div id="or" class="ui-widget-content ">
+                    <div id="or" class="ui-widget-content bouger">
                             <img class="document" src="assets/or.png">
                     </div>
+                    
                 </div>
-
+               
 
                 <div class="col-sm-1 three-div pull-left"></div>
 
@@ -99,8 +104,7 @@
     <script>
         $(document).ready(function(){
             checkCookie();
-            loadHeader();
-            checkProfil();    
+            loadHeader();   
         });
     </script>
 </html>

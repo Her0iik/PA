@@ -50,7 +50,7 @@ function checkProfil() {
         $('#nomUserMenu').text("Welcome " +prenom);
     
     }else{
-        //alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
+        alert("Première connexion? Aller dans votre profil pour mettre à jours vos informations personelles.");
         // can add redirection on profil + accept the GRPD
     }
 }

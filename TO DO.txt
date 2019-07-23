@@ -1,22 +1,21 @@
--créer les page exo / cours pour eleve
 -ajouter gtpr (test pas nom -> rediriger profil -> ask accept rgpd + liens ou popup DL) 
--resoudre exo
+-drag and drop exo
 
 
 -ajouter medias dans creatCours + dans affiche cour 
 -créer fichier variable avec tous les path + changer header avec les varriables 
 
-ERROR :
-a vérifier profil chargement des données ( email + mdp )
-+ UPDATE PROFIL à tester si fonctionne 
-
 + mettre tous les script dans des pages.js ? 
 + RELIR tout les // + /* */ + console.log + alert si les delet ?
-+ delet bouton page exo dans accueil
+
++remplacer tooutes les url api par : Http://api.mtrembley.fr
 
 
 
+problème:
 
-C'est quoi la route pour tester si un exo est valide ou pas ? 
-Et qaund on recup la liste des exo  d'un student y a moyen de voir les quelles sont déjà validé ? 
+correction exo : pas de route
+ne peut pas savoir quel exo réussi par étudiant
+route pour avoir les cours et exo d'un étudiant la veille 
+id cours identitque 
 

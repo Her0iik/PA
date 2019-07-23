@@ -27,7 +27,6 @@
             <div class="form-group">
                 <label for="deadline">Deadline :</label>
                <input id="deadline" type="datetime-local" class="form-control" required>
-                <!--<input id="deadline" type="datetime-local" form-control" required>-->
             </div>
             <div id ="divPromo"class="form-group">
                 <label for="promoYear">Promotion :</label >
@@ -60,7 +59,7 @@
                     $("#msgError").show();
                 }
                 else {          e.preventDefault(); 
-                    var promoIds = promoIds.map(Number); //Output: [1,2,3]
+                    var promoIds = promoIds.map(Number);
                     var jwt= Cookies.get('LS_token');                              
                     console.log("user jwt :"+jwt);
                     var coursFile =$("#formControlFile").val();
@@ -71,7 +70,7 @@
                     console.log("params :"+params);          
                     var str = jQuery.param( params );
                     console.log("str :"+str);
-                    xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours?"+str, true);
+                    xhr.open("POST", "Http://api.mtrembley.fr/api/cours?"+str, true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);              
                     xhr.send();
@@ -107,7 +106,7 @@
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser, true);
+            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser, true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();
@@ -119,7 +118,7 @@
                         var User = JSON.parse(xhr2.responseText);
                         var sections = User.sections
                         console.log(sections);
-                        sections.forEach(function (m/*, index */){
+                        sections.forEach(function (m){
                             var ligne = $('<div id="checkboxdiv'+m.sectionId+'" class="custom-control custom-checkbox mr-sm-2">');
                             ligne.append($('<input type="checkbox" class="custom-control-input" id="' + m.sectionId + '">'));
                             ligne.append($('<label class="custom-control-label" for="' +m.sectionId + '">      '+m.sectionLabel+" "+m.promotionYear+'</label>'));

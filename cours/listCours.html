@@ -67,7 +67,7 @@
                 var idCours = $(this).attr('id');
                 if(idCours){
                     var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/cours/id/"+idCours, true);
+                    xhr2.open("GET", "Http://api.mtrembley.fr/api/cours/id/"+idCours, true);
                     xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr2.setRequestHeader('Authorization',jwt);
                     xhr2.send();
@@ -95,7 +95,6 @@
                                     $("#body2").append(ligne); }
 
                                 });                        
-                            // $('#table-2').createTable(sections, {}); 
                             }
                             else if (xhr2.status == 403){ 
                                 console.log(xhr2.status);                              
@@ -113,20 +112,22 @@
                     }
                 }
                });
+            var idCoursGlobal; 
+            var namePromoGlobal;
             jsonUser = JSON.parse(Cookies.get('LS_user'));
             var idUser = jsonUser["id"];
             var jwt= Cookies.get('LS_token');
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/users/id/"+idUser+"/cours", true);
+            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();
             xhr2.onreadystatechange = function() {
                 if (xhr2.readyState == 4){
                     if(xhr2.status == 202 ||xhr2.status == 200) {
-                        console.log("respond api call 1:"+xhr2.responseText);
+                        //console.log("respond api call 1:"+xhr2.responseText);
                         arrayCours = JSON.parse(xhr2.responseText);
                         console.log(arrayCours);
                         arrayCours.forEach(function (m){
@@ -136,17 +137,59 @@
                             }else{
                                 support="";
                             }
+                            idCoursGlobal = m.coursId ;
+                            var listePromo = [] ;
                             var ligne = $('<tr id="'+ m.coursId+'"></tr>');
                             ligne.append($("<td>" + m.coursLabel + "</td>"));
                             ligne.append($("<td>" + m.deadline[2]+"/"+m.deadline[1]+"/"+m.deadline[0]+" - "+m.deadline[3] +":"+ m.deadline[4]+"</td>"));
                             ligne.append($("<td>" + support +"</td>"));
-                            ligne.append($("<td>" +  "</td>"));     
+                             // ligne.append($("<td>" +  "</td>"));
+                           // $("#body1").append(ligne);        
                             // créer un fonction call GET/api/users/id/{userId} pârcour les fonction et si
                             //  section.cours.coursId = tr.id alors add dans le td section.sectionLabel + section.sectionYear
-                            $("#body1").append(ligne);
-                            
+                            /*
+                                            var xhr2 = new XMLHttpRequest();
+                                            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser, true);
+                                            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                                            xhr2.setRequestHeader('Authorization',jwt);
+                                            xhr2.send();
+                                            xhr2.onreadystatechange = function() {
+                                                if (xhr2.readyState == 4){
+                                                    if(xhr2.status == 202 ||xhr2.status == 200) {
+                                                        console.log("respond api call 2:"+xhr2.responseText);
+                                                        var user = JSON.parse(xhr2.responseText);
+                                                        var section = user.sections
+                                                        console.log(section);
+                                                        section.forEach(function (n){
+                                                            namePromoGlobal=n.sectionLabel+" "+n.promotionYear;
+                                                            
+                                                            if(n.cours.length === 0){
+                                                                console.log("n.cours vide");
+
+                                                            }else{
+                                                                console.log("n.cours :");
+                                                                console.log(n.cours);
+                                                                arrayCours =n.cours;
+                                                                arrayCours.forEach(function (o){
+                                                                    console.log(o.coursId);
+                                                                    if(o.coursId=idCoursGlobal){
+                                                                        listePromo.push(namePromoGlobal)
+                                                                        console.log(listePromo);
+                                                                    }
+                                                                })
+
+                                                            }
+                                                           
+
+                                                        })
+
+                                                    }
+                                                }
+                                            }*/
+                            ligne.append($("<td>" +listePromo + "</td>"));
+                            $("#body1").append(ligne);                             
+                                   
                         })
-                       // $('#table-2').createTable(sections, {}); 
                     }
                     else if (xhr2.status == 403){ 
                         console.log(xhr2.status);                              
@@ -162,9 +205,6 @@
                     }
                 }
             }
-
-           
-
         });
     </script>
 </html>
