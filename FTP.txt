@@ -1,0 +1,9 @@
+http://lightningschool.yj.fr/
+
+Nom d’utilisateur FTP (login): lighwspc
+
+Serveur (host): ftp.lightningschool.yj.fr
+
+Port : 21
+
+Mot de passe: MgZkXy29YvKhzS
