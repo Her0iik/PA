@@ -58,7 +58,7 @@
                     var exoLabel =$("#exoLabel").val();
                     var coursId =parseInt($("#selectCours option:selected").val());
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "Http://api.mtrembley.fr/api/cours/exercices", true);
+                    xhr.open("POST", "https://api.mtrembley.fr/api/cours/exercices", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
                     var data = JSON.stringify({"coeficient" : coef , "coursId" : coursId , "exerciceLabel" : exoLabel});
@@ -92,7 +92,7 @@
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
+            xhr2.open("GET", "https://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();

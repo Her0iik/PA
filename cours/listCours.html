@@ -67,7 +67,7 @@
                 var idCours = $(this).attr('id');
                 if(idCours){
                     var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", "Http://api.mtrembley.fr/api/cours/id/"+idCours, true);
+                    xhr2.open("GET", "https://api.mtrembley.fr/api/cours/id/"+idCours, true);
                     xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr2.setRequestHeader('Authorization',jwt);
                     xhr2.send();
@@ -119,7 +119,7 @@
             console.log("user id :"+idUser);                              
             console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
-            xhr2.open("GET", "Http://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
+            xhr2.open("GET", "https://api.mtrembley.fr/api/users/id/"+idUser+"/cours", true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr2.setRequestHeader('Authorization',jwt);
             xhr2.send();

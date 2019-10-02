@@ -29,7 +29,7 @@
                 var login = $("#inputEmail").val();
                 e.preventDefault();
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://ec2-35-180-196-86.eu-west-3.compute.amazonaws.com/api/auth/login", true);
+                xhr.open("POST", "https://api.mtrembley.fr/api/auth/login", true);
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                 xhr.send(JSON.stringify({"mail" : login, "password" : password}));
                 xhr.onreadystatechange = function() {
@@ -62,7 +62,7 @@
                             console.log(xhr.status);                              
                             console.log(xhr.statusText);
                             console.log(xhr.text);
-                            alert("erreur" + xhr.status);
+                            alert("erreur code : " + xhr.status);
                         }
                     }
                 }
