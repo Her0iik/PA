@@ -54,3 +54,4 @@ function checkProfil() {
         // can add redirection on profil + accept the GRPD
     }
 }
+
