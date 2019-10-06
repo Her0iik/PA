@@ -378,11 +378,14 @@
                     <button onclick="load()">Load</button>
                     Diagram Model saved in JSON format:
                 </div>
- 
-                <div id="toShow">
+
                 <p  id="verifyText" >
-                    Je devrais faire un call api pour saved le Diagram Model puis comparer avec celui de la correction (celui du prof )
-               </p>
+                        Je devrais faire un call api pour SAVED le Diagram Model puis comparer avec celui de la correction (celui du prof )
+                </p>
+                <p  id="correctionText" >
+                        Je devrais faire un call api pour LOAD le Diagram Model de la correction (celui du prof )
+                </p> 
+                <div id="toShow">
                   <textarea id="mySavedModel" style="width:100%;height:200px">{ "class": "GraphLinksModel",
                         "linkFromPortIdProperty": "fromPort",
                         "linkToPortIdProperty": "toPort",
@@ -400,10 +403,10 @@
 
         <div id="buttonZone"> 
                 <p> </p><p> </p><p> </p>
-                <button id="exoVerify" type="button" class="btn btn-success">Vérifier</button>
+                <button id="exoVerify" type="button" class="btn btn-success" onclick="save()" >Vérifier</button>
                  <!-- CALL API vrifi exercice  -->
                 <p> </p>
-                <button type="button" class="btn btn-dark">Correction</button>
+                <button id="correctionLoad"type="button" class="btn btn-dark" onclick="load()">Correction</button>
                 <!-- CALL API get correction -->
                 <p> </p>
                
@@ -417,10 +420,18 @@
             $('#exoLabel').html(exoLabel);
             checkCookie();
             loadHeader();  
-            $('#toShow').toggle('show');
-            $('#exoVerify').live('click', function(event) {
-                //should do the API call here
-                $('#toShow').toggle('show');
+            $("#toShow").hide();
+            $("#verifyText").hide();
+            $("#correctionText").hide();
+            $('#exoVerify').on('click', function() {
+                $("#correctionText").hide();
+                $("#verifyText").show();
+                $("#toShow").show();
+            });
+            $('#correctionLoad').on('click', function() {
+                $("#verifyText").hide();
+                $("#correctionText").show();
+                $("#toShow").show();
             });
         });
     </script>
