@@ -3,7 +3,7 @@
 
 function checkCookie() {  
             if (typeof $.cookie('LS_user') === 'undefined'){
-                window.location="http://localhost/pa/connexion.html?";
+                window.location="../index.html?";
             }              
             else if (Cookies.get('LS_user')){
                 jsonUser = JSON.parse(Cookies.get('LS_user'));
@@ -20,12 +20,12 @@ function loadHeader(){
     jsonUser = JSON.parse(Cookies.get('LS_user'));
     var typeUser =jsonUser["userTypeEnum"];
     if(typeUser=="STUDENT"){
-        $.get("http://localhost/pa/header/headerStudent.html", function(data) {
+        $.get("../header/headerStudent.html", function(data) {
             $("#header").html(data);
             loadClick();
         });
     }else{
-        $.get("http://localhost/pa/header/headerTeacher.html", function(data) {
+        $.get("../header/headerTeacher.html", function(data) {
             $("#header").html(data);
             loadClick();
         });
@@ -36,10 +36,10 @@ function loadClick(){
     $("#logout").click(function(){
         Cookies.remove('LS_user');
         Cookies.remove('LS_token');
-        document.location.href='http://localhost/pa/connexion.html?'
+        document.location.href='../index.html?'
     });
     $("#profil").click(function(){
-        document.location.href='http://localhost/pa/profil.html?'         
+        document.location.href='../profil.html?'         
     });
 }
 

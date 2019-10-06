@@ -55,7 +55,7 @@
         $( "#retour" ).click(function() {
             Cookies.remove('LS_user_admin');
             Cookies.remove('LS_token_admin');
-            document.location.href='connexion.html?'
+            document.location.href='index.html?'
         });
 
         $(document).ready(function(){
@@ -151,7 +151,7 @@
                                 }
                                 //Cookies.remove('LS_user_admin');
                                 //Cookies.remove('LS_token_admin');
-                               // window.location="connexion.html?";
+                               // window.location="index.html?";
                             }
                             else if (xhr.status == 403){ 
                                 console.log(xhr.status);                              
