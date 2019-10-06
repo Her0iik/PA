@@ -50,7 +50,7 @@
                                 Cookies.set('LS_token', jwt, {expires: expireTimer});
                                 Cookies.set('LS_user', user, {expires: expireTimer});
                                 console.log("cookie token user: "+Cookies.get('LS_token'));
-                                window.location="accueil.html?";
+                                window.location="../cours/listCours.html";
                             }
                         }
                         else if (xhr.status == 400){ 
