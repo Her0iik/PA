@@ -40,7 +40,7 @@
 
         <div  id="contentExo" class="content2"style="display: block;"> 
             <h3 id="tabExo" class="h3 mb-3 font-weight-normal"></h3>
-            <table class="table table-striped" id="Exo" >
+            <table class="table table-striped" id="exo" >
                 <thead>
                     <tr id="menuTabExo" class="table-primary" style="display: none;">
                         <th>Nom</th>
@@ -63,6 +63,13 @@
             loadHeader(); 
             var arrayCours;
 
+            $('#exo').on('click','tr', function() { 
+                // Si les root fonctionnaire correctement je mettrait le JSON de l'exo directement pour avoir toutes les infos
+                var exoLabel = $(this).find("td:eq(0)").text();
+                Cookies.set('LS_Exo', exoLabel);
+                window.location="exo.html?";
+
+            });
             $('#cours').on('click','tr', function() { 
                 var idCours = $(this).attr('id');
                 if(idCours){
@@ -188,12 +195,6 @@
                             //ligne.append($("<td>" +listePromo + "</td>"));
                             $("#body1").append(ligne);                                                     
                         })
-                    }
-                    else if (xhr2.status == 403){ 
-                        console.log(xhr2.status);                              
-                        console.log(xhr2.statusText);
-                        console.log(xhr2.text);
-                        alert("interdit" );
                     }
                     else { 
                         console.log(xhr2.status);                              
