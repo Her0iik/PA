@@ -11,6 +11,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
         <script src="../js/js_cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="../GoJS/go.js"></script>
+        <script src="../GoJS/Figures.js"></script>
         <link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico">
 
         <script id="code">
@@ -412,12 +414,13 @@
                     console.log("user jwt :"+jwt);
                     var coef =$("#coefExo").val();
                     var exoLabel =$("#exoLabel").val();
+                    var diagram =$("#mySavedModel").val();
                     var coursId =parseInt($("#selectCours option:selected").val());
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "https://api.mtrembley.fr/api/cours/exercices", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);
-                    var data = JSON.stringify({"coeficient" : coef , "coursId" : coursId , "exerciceLabel" : exoLabel});
+                    var data = JSON.stringify({"coeficient" : coef , "coursId" : coursId , "exerciceLabel" : exoLabel, "npi" : diagram});
                     xhr.send(data); 
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){

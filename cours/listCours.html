@@ -96,7 +96,7 @@
                                     if(m.exercicePath){
                                         exoPath=m.exercicePath;
                                     }                               
-                                    var ligne = $("<tr </tr>");
+                                    var ligne = $('<tr id="'+ m.exerciceId+'"></tr>');
                                     ligne.append($("<td>" + m.exerciceLabel + "</td>"));
                                     ligne.append($("<td>" + m.coeficient + "</td>"));
                                     $("#body2").append(ligne); }
