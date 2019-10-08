@@ -73,12 +73,13 @@
                 jsonUser = JSON.parse(Cookies.get('LS_user'));
                 var typeUser =jsonUser["userTypeEnum"];
                 if(typeUser=="STUDENT"){
-                    window.location="exo.html?";
+                    //window.location="exo.html?";
+                    window.location="exoProf.html?";
                 }else{
                     window.location="exoProf.html?";
+                    
                 }               
             });
-
             $('#cours').on('click','tr', function() { 
                 var idCours = $(this).attr('id');
                 if(idCours){
@@ -126,8 +127,7 @@
                         }
                     }
                 }
-            });
-            
+               });
             var idCoursGlobal; 
             var namePromoGlobal;
             jsonUser = JSON.parse(Cookies.get('LS_user'));
