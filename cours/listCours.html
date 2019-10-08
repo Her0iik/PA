@@ -68,9 +68,17 @@
                 // Si les root fonctionnaire correctement je mettrait le JSON de l'exo directement pour avoir toutes les infos
                 var exoLabel = $(this).find("td:eq(0)").text();
                 Cookies.set('LS_Exo', exoLabel);
-                window.location="exo.html?";
-
+                var idExo = $(this).attr('id');
+                Cookies.set('LS_ExoId', idExo);
+                jsonUser = JSON.parse(Cookies.get('LS_user'));
+                var typeUser =jsonUser["userTypeEnum"];
+                if(typeUser=="STUDENT"){
+                    window.location="exo.html?";
+                }else{
+                    window.location="exoProf.html?";
+                }               
             });
+
             $('#cours').on('click','tr', function() { 
                 var idCours = $(this).attr('id');
                 if(idCours){
@@ -118,7 +126,8 @@
                         }
                     }
                 }
-               });
+            });
+            
             var idCoursGlobal; 
             var namePromoGlobal;
             jsonUser = JSON.parse(Cookies.get('LS_user'));

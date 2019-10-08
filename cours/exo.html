@@ -354,10 +354,10 @@
 
         
         <div id="exo" style="width: 20%;"> 
-            <h3 id="exoLabel" style="text-align: center">  <!-- Writ in loading page with jquery   --></h3> 
+            <h3 id="exoLabel" style="text-align: center">  <!-- Write in loading page with jquery   --></h3> 
             <p> </p>
             <p  style="text-align: justify;">
-                <!-- ceci est un exemple fonction load charge le bon énnoncé  -->
+                <!-- fonction load charge le bon énnoncé  -->
                     </p>
         </div>
 
@@ -428,28 +428,7 @@
 
 
 
-            jsonUser = JSON.parse(Cookies.get('LS_user'));
-            var jwt= Cookies.get('LS_token');                            
-            console.log("user jwt :"+jwt);
-            var xhr2 = new XMLHttpRequest();
-            
-            xhr2.open("GET", "https://api.mtrembley.fr/cours/exercices/"+idUser, true);
-            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-            xhr2.setRequestHeader('Authorization',jwt);
-            xhr2.send();
-            xhr2.onreadystatechange = function() {
-                if (xhr2.readyState == 4){
-                    if(xhr2.status == 202 ||xhr2.status == 200) {
-                        console.log("respond api call: "+xhr2.responseText);
-                    }
-                    else { 
-                        console.log(xhr2.status);                              
-                        console.log(xhr2.statusText);
-                        console.log(xhr2.text);
-                        //alert("erreur " + xhr2.status);
-                    }
-                }
-            }
+          
         });
     </script>
 </html>

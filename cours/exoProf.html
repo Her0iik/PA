@@ -351,8 +351,8 @@
             <h3 id="exoLabel" style="text-align: center">  <!-- Writ in loading page with jquery   --></h3> 
             <p> </p>
             <p  style="text-align: justify;margin-left: 30px;">
-                <!-- ceci est un exemple fonction load charge le bon énnoncé  -->
-                    Babel is a design pattern that provides client and coherent APIs. Despite the client and Cordova is a social network programming styles using observable streams. HTTP as individual keystrokes. SJSJ is a JavaScript implementation in a static type of the exact class of the content, for transferring data fetching. Object Model DOM is a cross-platform runtime environment for Node.
+                <!-- fonction load charge le bon énnoncé  -->
+                   
             </p>
         </div>
     
@@ -377,16 +377,7 @@
                 </br>
 
                 <div id="toShow">
-                    <textarea id="mySavedModel" style="width:100%;height:200px">{ "class": "GraphLinksModel",
-                            "linkFromPortIdProperty": "fromPort",
-                            "linkToPortIdProperty": "toPort",
-                            "nodeDataArray": [ 
-                            {"category":"input", "key":-1, "loc":"-460 -250"},
-                            {"category":"output", "key":-2, "loc":"50 -240"}
-                            ],
-                            "linkDataArray": [ 
-                        
-                            ]}
+                    <textarea id="mySavedModel" style="width:100%;height:200px">
                     </textarea>
                 </div>
             </div>
@@ -404,6 +395,30 @@
             $('#exoLabel').html(exoLabel);
             checkCookie();
             loadHeader();  
+
+
+            jsonUser = JSON.parse(Cookies.get('LS_user'));
+            var jwt= Cookies.get('LS_token');      
+            var idExo = Cookies.get('LS_ExoId');                
+            console.log("user jwt :"+jwt);
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "https://api.mtrembley.fr/cours/exercices/"+idExo, true);
+            xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr2.setRequestHeader('Authorization',jwt);
+            xhr2.send();
+            xhr2.onreadystatechange = function() {
+                if (xhr2.readyState == 4){
+                    if(xhr2.status == 202 ||xhr2.status == 200) {
+                        console.log("respond api call: "+xhr2.responseText);
+                    }
+                    else { 
+                        console.log(xhr2.status);                              
+                        console.log(xhr2.statusText);
+                        console.log(xhr2.text);
+                        //alert("erreur " + xhr2.status);
+                    }
+                }
+            }
            
         });
     </script>
