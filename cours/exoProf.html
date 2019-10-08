@@ -331,6 +331,8 @@
     function save() {
       document.getElementById("mySavedModel").value = myDiagram.model.toJson();
       myDiagram.isModified = false;
+
+
     }
     function load() {
       myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
@@ -338,82 +340,63 @@
     </script>
        
     </head>
-    <body id="body" class="content" onload="init()">
-        <div id="header">
+    <body id="body" class="content" onload="init()">                
+            <div id="header">
                 <!-- Content will be inserted by jQuery from /header/. -->
-        </div>
-
-        <style>
-            #draggable { width: 150px; height: 150px; padding: 0.5em; }
-            #box { width: 60px; height: 350px; padding: 0.5em, }
-            #droppable  { margin-top: 30px ;width: 60%; height: 500px; } 
-            #buttonZone{ width: 100px; height: 350px; }
-            #exo { margin: 30px; margin-right: 50px }
-            #buttonZone button {margin-left: 50px; width: 100px; }
-        </style>
-
-        
-        <div id="exo" style="width: 20%;"> 
+            </div>
+          
+                
+             
+        <div id="exo" style="width: 25%;"> 
             <h3 id="exoLabel" style="text-align: center">  <!-- Writ in loading page with jquery   --></h3> 
             <p> </p>
-            <p  style="text-align: justify;">
+            <p  style="text-align: justify;margin-left: 30px;">
                 <!-- ceci est un exemple fonction load charge le bon énnoncé  -->
                     Babel is a design pattern that provides client and coherent APIs. Despite the client and Cordova is a social network programming styles using observable streams. HTTP as individual keystrokes. SJSJ is a JavaScript implementation in a static type of the exact class of the content, for transferring data fetching. Object Model DOM is a cross-platform runtime environment for Node.
             </p>
         </div>
+    
+        <div  id="diagram" class="content2"> 
+            <div id="droppable" class="deposer" > 
+                    <div id="sample">
+                            <div style="width: 100%; display: flex; justify-content: space-between">
+                              <div id="palette" style="width: 100px; height: 500px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
+                              <div id="myDiagramDiv" style="flex-grow: 1; height: 500px; border: solid 1px black"></div>
+                            </div>
+                    
+                    <p style="visibility:hidden;">
+                            Je devrais faire un call api pour SAVED le Diagram Model puis comparer avec celui de la correction (celui du prof )
+                    </p>
 
-
-
-        <div id="droppable" class="deposer" > 
-
-
-            <div id="sample">
-                <div style="width: 100%; display: flex; justify-content: space-between">
-                  <div id="palette" style="width: 100px; height: 500px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
-                  <div id="myDiagramDiv" style="flex-grow: 1; height: 500px; border: solid 1px black"></div>
+                    <div style="text-align: center">
+                        <button class="btn btn-outline-success" id="saveModel" onclick="save()">Save</button>
+                        <button class="btn btn-outline-primary" onclick="load()">Load</button>
+                        Diagram Model in JSON format:
+                    </div>
                 </div>
-              
+                </br>
 
-                <div style="visibility:hidden;">
-                    <button id="saveModel" onclick="save()">Save</button>
-                    <button onclick="load()">Load</button>
-                    Diagram Model saved in JSON format:
-                </div>
-
-                <p  id="verifyText" >
-                        Je devrais faire un call api pour SAVED le Diagram Model puis comparer avec celui de la correction (celui du prof )
-                </p>
-                <p  id="correctionText" >
-                        Je devrais faire un call api pour LOAD le Diagram Model de la correction (celui du prof )
-                </p> 
                 <div id="toShow">
-                  <textarea id="mySavedModel" style="width:100%;height:200px">{ "class": "GraphLinksModel",
-                        "linkFromPortIdProperty": "fromPort",
-                        "linkToPortIdProperty": "toPort",
-                        "nodeDataArray": [ 
-                        {"category":"input", "key":-1, "loc":"-460 -250"},
-                        {"category":"output", "key":-2, "loc":"50 -240"}
-                        ],
-                        "linkDataArray": [ 
-                      
-                        ]}
-                  </textarea></div>
+                    <textarea id="mySavedModel" style="width:100%;height:200px">{ "class": "GraphLinksModel",
+                            "linkFromPortIdProperty": "fromPort",
+                            "linkToPortIdProperty": "toPort",
+                            "nodeDataArray": [ 
+                            {"category":"input", "key":-1, "loc":"-460 -250"},
+                            {"category":"output", "key":-2, "loc":"50 -240"}
+                            ],
+                            "linkDataArray": [ 
+                        
+                            ]}
+                    </textarea>
                 </div>
+            </div>
         </div>
+            
+          
+    
+        </body>
 
-
-        <div id="buttonZone"> 
-                <p> </p><p> </p><p> </p>
-                <button id="exoVerify" type="button" class="btn btn-success" onclick="save()" >Vérifier</button>
-                 <!-- CALL API vrifi exercice  -->
-                <p> </p>
-                <button id="correctionLoad"type="button" class="btn btn-dark" onclick="load()">Correction</button>
-                <!-- CALL API get correction -->
-                <p> </p>
-               
-        </div>
-
-    </body>
+        
     <script>
         $(document).ready(function(){
             // NORMALEMENT CALL API get exercice par ID 
@@ -421,19 +404,7 @@
             $('#exoLabel').html(exoLabel);
             checkCookie();
             loadHeader();  
-            $("#toShow").hide();
-            $("#verifyText").hide();
-            $("#correctionText").hide();
-            $('#exoVerify').on('click', function() {
-                $("#correctionText").hide();
-                $("#verifyText").show();
-                $("#toShow").show();
-            });
-            $('#correctionLoad').on('click', function() {
-                $("#verifyText").hide();
-                $("#correctionText").show();
-                $("#toShow").show();
-            });
+           
         });
     </script>
 </html>
