@@ -103,7 +103,7 @@
                     console.log("user update :"+dataJson);         
                     e.preventDefault();
                     var jwt= Cookies.get('LS_token');
-                    console.log("jwt :"+jwt);
+                    //console.log("jwt :"+jwt);
                     var xhr = new XMLHttpRequest();
                     xhr.open("PUT", "https://api.mtrembley.fr/api/users/"+idUser+"/edit", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
@@ -119,8 +119,6 @@
                             }
                             else { 
                                 console.log("status code result :"+xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
                                 alert("erreur " );
                             }
                         }
@@ -151,8 +149,8 @@
                     jsonUser = JSON.parse(Cookies.get('LS_user'));
                     var idUser = jsonUser["id"];        
                     var jwt= Cookies.get('LS_token');
-                    console.log("Delet jwt :"+jwt);
-                    console.log("Delet idUser :"+idUser);
+                    //console.log("Delet jwt :"+jwt);
+                    //console.log("Delet idUser :"+idUser);
                     var xhr = new XMLHttpRequest();
                     xhr.open("DELETE", "https://api.mtrembley.fr/api/users/"+idUser+"/delete", true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
@@ -169,7 +167,6 @@
                             else { 
                                 console.log("status code result :"+xhr.status);                              
                                 console.log(xhr.statusText);
-                                console.log(xhr.text);
                                 alert("erreur " );
                             }
                         }

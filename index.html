@@ -43,26 +43,22 @@
                             if(jsonUser["userTypeEnum"]=="ADMIN"){
                                 Cookies.set('LS_token_admin', jwt, {expires: expireTimer});
                                 Cookies.set('LS_user_admin', user, {expires: expireTimer});
-                                console.log("cookie token admin: "+Cookies.get('LS_token'));
+                                //console.log("cookie token admin: "+Cookies.get('LS_token'));
                                 window.location="inscription.html?";
                             }
                             else{
                                 Cookies.set('LS_token', jwt, {expires: expireTimer});
                                 Cookies.set('LS_user', user, {expires: expireTimer});
-                                console.log("cookie token user: "+Cookies.get('LS_token'));
+                                //console.log("cookie token user: "+Cookies.get('LS_token'));
                                 window.location="../cours/listCours.html";
                             }
                         }
                         else if (xhr.status == 400){ 
                             console.log(xhr.status);                              
-                            console.log(xhr.statusText);
-                            console.log(xhr.text);
                             alert("email et/ou mot de passe faux !" );
                         }
                         else { 
                             console.log(xhr.status);                              
-                            console.log(xhr.statusText);
-                            console.log(xhr.text);
                             alert("erreur code : " + xhr.status);
                         }
                     }

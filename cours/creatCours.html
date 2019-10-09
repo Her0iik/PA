@@ -62,15 +62,15 @@
                 else {          e.preventDefault(); 
                     var promoIds = promoIds.map(Number);
                     var jwt= Cookies.get('LS_token');                              
-                    console.log("user jwt :"+jwt);
+                    //console.log("user jwt :"+jwt);
                     var coursFile =$("#formControlFile").val();
                     var coursLabel =$("#coursLabel").val();
                     var deadline =$("#deadline").val();
                     var xhr = new XMLHttpRequest();
                     var params = {"coursLabel":coursLabel,"deadline":deadline,"sectionsIds":promoIds};
-                    console.log("params :"+params);          
+                    //console.log("params :"+params);          
                     var str = jQuery.param( params );
-                    console.log("str :"+str);
+                    //console.log("str :"+str);
                     xhr.open("POST", "https://api.mtrembley.fr/api/cours?"+str, true);
                     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr.setRequestHeader('Authorization',jwt);              
@@ -78,21 +78,13 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4){
                             if(xhr.status == 201 ||xhr.status == 200) {
-                                console.log(xhr.responseText);
+                                //console.log(xhr.responseText);
                                 User = JSON.parse(xhr.responseText);
                                 alert("succes" );                       
                             }
-                            else if (xhr2.status == 403){ 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("interdit" );
-                            }
                             else { 
-                                console.log(xhr2.status);                              
-                                console.log(xhr2.statusText);
-                                console.log(xhr2.text);
-                                alert("erreur status :" + xhr2.status);
+                                
+                                console.log("erreur status :" + xhr2.status);
                             }
                         }
                     }   
@@ -104,8 +96,8 @@
             jsonUser = JSON.parse(Cookies.get('LS_user'));
             var idUser = jsonUser["id"];
             var jwt= Cookies.get('LS_token');
-            console.log("user id :"+idUser);                              
-            console.log("user jwt :"+jwt);
+            //console.log("user id :"+idUser);                              
+            //console.log("user jwt :"+jwt);
             var xhr2 = new XMLHttpRequest();
             xhr2.open("GET", "https://api.mtrembley.fr/api/users/id/"+idUser, true);
             xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
@@ -126,17 +118,8 @@
                             $("#divPromo").append(ligne);
                         })
                     }
-                    else if (xhr2.status == 403){ 
-                        console.log(xhr2.status);                              
-                        console.log(xhr2.statusText);
-                        console.log(xhr2.text);
-                        alert("interdit" );
-                    }
                     else { 
-                        console.log(xhr2.status);                              
-                        console.log(xhr2.statusText);
-                        console.log(xhr2.text);
-                        alert("erreur" + xhr2.status);
+                        console.log("erreur" + xhr2.status);
                     }
                 }
             }

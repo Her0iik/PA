@@ -381,12 +381,16 @@
                   Diagram Model saved in JSON format:
               </div>
 
-              <p  id="verifyText" >
-                      Je devrais faire un call api pour SAVED le Diagram Model puis comparer avec celui de la correction (celui du prof )
-              </p>
-              <p  id="correctionText" >
-                      Je devrais faire un call api pour LOAD le Diagram Model de la correction (celui du prof )
-              </p> 
+              <div id="exoSucces" class="alert alert-success" role="alert">
+                  Bravo exercice réussi!
+              </div>
+              <div id="exoFailed" class="alert alert-danger" role="alert">
+                  Essaie encore !
+              </div>
+              <div id="exoCorrection" class="alert alert-warning" role="alert">
+                  Voici la correction!
+              </div>
+
               <div id="toShow">
                 <textarea id="mySavedModel" style="width:100%;height:200px">
                     { "class": "GraphLinksModel",
@@ -414,10 +418,10 @@
 
         <div id="buttonZone"> 
                 <p> </p><p> </p><p> </p>
-                <button id="exoVerify" type="button" class="btn btn-success" onclick="save()" >Vérifier</button>
+                <button id="exoVerify" type="button" class="btn btn-success" >Vérifier</button>
                  <!-- CALL API vrifi exercice  -->
                 <p> </p>
-                <button id="correctionLoad"type="button" class="btn btn-dark" ">Correction</button>
+                <button id="correctionLoad"type="button" class="btn btn-dark" >Correction</button>
                 <!-- <button id="correctionLoad"type="button" class="btn btn-dark" onclick="load()">Correction</button>  //////CALL API get correction -->
                 <p> </p>
                
@@ -425,56 +429,36 @@
 
     </body>
     <script>
-       
-
-      function getCorrection(idExoProf){
-        var result;
-        var jwt= Cookies.get('LS_token');                              
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://api.mtrembley.fr/api/cours/exercices/"+idExoProf, true);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr.setRequestHeader('Authorization',jwt);
-        xhr.send(); 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4){
-                if(xhr.status == 202 ||xhr.status == 200 || xhr.status ==201) {
-                    result =JSON.parse(xhr.responseText);
-                    //console.log(result);   
-                    result = result.npi;
-                    //console.log(exoProf);   
-                    //$("#mySavedModel2").val(exoProf);         
-                }
-                else { 
-                    console.log("Code erreur :" +xhr.status);                              
-                    alert("Erreure d'execution !" );
-                }
-            }
-        } 
-        return result; 
-      }
       
 
-      function checkEq( ) { 
+      function checkEq() { 
         var textarea1 = $('#mySavedModel').val();
         var tabLink1= createLinkTab(textarea1);
-        console.log("tabLink1 : ");
-        console.log(tabLink1);
+       // console.log(tabLink1);
         var textarea2 = $('#mySavedModel2').val();
+        //console.log(testGrap);
         var tabLink2= createLinkTab(textarea2);
-        console.log("tabLink2 : ");
-        console.log(tabLink2);
-        console.log(jsonTabEqual(tabLink1,tabLink2));
+       // console.log(tabLink2);
+        //console.log(jsonTabEqual(tabLink1,tabLink2));
         if(jsonTabEqual(tabLink1,tabLink2)){
-            $('#result').text('Les deux graphs sont égaux');
-        }else{
-            $('#result').text('Les deux graphs sont différents');
-        }
+            $("#exoFailed").hide();
+            $("#exoCorrection").hide();
+            $("#exoSucces").fadeIn(1000);
+            $("#exoSucces").delay(5000).fadeOut(2000);
+          }else{
+            $("#exoSucces").hide();
+            $("#exoCorrection").hide();
+            $("#exoFailed").fadeIn(1000);
+            $("#exoFailed").delay(5000).fadeOut(2000);
+          }
       }  
       
       function createLinkTab( textareaInput) { 
         var dictNode= {} ;
         var tabLink= [] ;
+        //console.log(textareaInput);
         var textareaJson1 = $.parseJSON(textareaInput);
+        //console.log(textareaJson1);
         var nodeArray = textareaJson1.nodeDataArray ;
         $.each(nodeArray, function(i, item) {
             dictNode[item.key] = item.category ;
@@ -511,11 +495,9 @@
           }
           return result;
       }  
-
-        $(document).ready(function(){
-
-          $("#correctionLoad").click(function() {  
-            var idExoProf = Cookies.get('LS_ExoId'); 
+      
+      function getCorrection(bool){
+        var idExoProf = Cookies.get('LS_ExoId'); 
             var jwt= Cookies.get('LS_token');                              
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "https://api.mtrembley.fr/api/cours/exercices/"+idExoProf, true);
@@ -527,10 +509,12 @@
                     if(xhr.status == 202 ||xhr.status == 200 || xhr.status ==201) {
                         result =JSON.parse(xhr.responseText);
                         //console.log(result);   
-                        exoProf = result.npi;
-                        //console.log(exoProf);   
-                        $("#mySavedModel2").val(exoProf);
-                        load2();         
+                        exoProf = result.npi;               
+                        //console.log(exoProf);
+                        $("#mySavedModel2").val(exoProf);    
+                        if(bool==true){
+                          load2();
+                        }      
                     }
                     else { 
                         console.log("Code erreur :" +xhr.status);                              
@@ -538,35 +522,35 @@
                     }
                 }
             } 
+      }
+
+        $(document).ready(function(){
+         
+          getCorrection(false);
+          $("#correctionLoad").click(function() {  
+            //getCorrection(true);
+            load2();
+            $("#exoSucces").hide();
+            $("#exoFailed").hide();
+            $("#exoCorrection").fadeIn(1000);
+            $("#exoCorrection").delay(5000).fadeOut(2000);
           });
 
-          function loadCorrection(graph) {
-            myDiagram.model = go.Model.fromJson(graph);      
-          }
+          $("#exoVerify").click(function() {   
+            save();
+            checkEq();
+          });
+
+          
             // NORMALEMENT CALL API get exercice par ID 
             var exoLabel = Cookies.get('LS_Exo');
             $('#exoLabel').html(exoLabel);
             checkCookie();
             loadHeader();  
-            /*
-            $("#toShow").hide();
-            $("#verifyText").hide();
-            $("#correctionText").hide();
-            $('#exoVerify').on('click', function() {
-                $("#correctionText").hide();
-                $("#verifyText").show();
-                $("#toShow").show();
-            });
-            $('#correctionLoad').on('click', function() {
-                $("#verifyText").hide();
-                $("#correctionText").show();
-                $("#toShow").show();
-            });*/
-  
-
-
-
-          
+            $("#exoSucces").hide();
+            $("#exoCorrection").hide();
+            $("#exoFailed").hide();
+            $("#toShow").hide(); 
         });
     </script>
 </html>
