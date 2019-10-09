@@ -1,20 +1,19 @@
 
 
-
 function checkCookie() {  
-            if (typeof $.cookie('LS_user') === 'undefined'){
-                window.location="../index.html?";
-            }              
-            else if (Cookies.get('LS_user')){
-                jsonUser = JSON.parse(Cookies.get('LS_user'));
-                var prenom =jsonUser["surname"];
-                var typeUser =jsonUser["userTypeEnum"];
-                
-                if (prenom!=null){
-                    $('#nomUserMenu').text(prenom);
-                }
-            } 
+    if (typeof $.cookie('LS_user') === 'undefined'){
+        window.location="../index.html?";
+    }              
+    else if (Cookies.get('LS_user')){
+        jsonUser = JSON.parse(Cookies.get('LS_user'));
+        var prenom =jsonUser["surname"];
+        var typeUser =jsonUser["userTypeEnum"];
+        
+        if (prenom!=null){
+            $('#nomUserMenu').text(prenom);
         }
+    } 
+}
         
 function loadHeader(){
     jsonUser = JSON.parse(Cookies.get('LS_user'));

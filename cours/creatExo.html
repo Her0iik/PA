@@ -428,16 +428,8 @@
                                 console.log("rep succes :"+xhr.responseText);
                                 alert("Création de l'exercice validé !" );                       
                             }
-                            else if (xhr.status == 403){ 
-                                console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
-                                alert("interdit 403" );
-                            }
                             else { 
                                 console.log(xhr.status);                              
-                                console.log(xhr.statusText);
-                                console.log(xhr.text);
                                 alert("erreur status :" + xhr.status);
                             }
                         }

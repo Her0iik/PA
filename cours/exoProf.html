@@ -384,7 +384,7 @@
                     </p>
 
                     <div >
-                        Penser a sauvegarder votre diagramme en JSON : 
+                        Penser à sauvegarder votre diagramme en JSON : 
                         <button class="btn btn-outline-success" id="saveModel" onclick="save()">transformer en JSON</button>
                         <button class="btn btn-outline-primary" onclick="load()">Charger le diagramme</button>
                     </div>
@@ -420,7 +420,7 @@
                     var diagram =$("#mySavedModel").val();
                     var coursId =parseInt($("#selectCours option:selected").val());
                     var xhr3 = new XMLHttpRequest();
-                    xhr3.open("PUT", "https://api.mtrembley.fr/api/cours/exercices", true);
+                    xhr3.open("PUT", "https://api.mtrembley.fr/api/cours/exercices/edit", true);
                     xhr3.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                     xhr3.setRequestHeader('Authorization',jwt);
                     var data = JSON.stringify({"coeficient" : coef , "coursId" : coursId , "exerciceId" : idExo, "exerciceLabel" : exoLabel, "npi" : diagram});
@@ -430,7 +430,7 @@
                         if (xhr3.readyState == 4){
                             if(xhr3.status ==201) {
                                 console.log("rep succes :");
-                                alert("Création de l'exercice validé !" );                       
+                                alert("Modification de l'exercice sauvegardé !" );                       
                             }
                             else { 
                                 console.log("Code erreur :" +xhr3.status);                              
