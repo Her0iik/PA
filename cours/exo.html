@@ -32,7 +32,7 @@
 
       // when the document is modified, add a "*" to the title and enable the "Save" button
       myDiagram.addDiagramListener("Modified", function(e) {
-        var button = document.getElementById("saveModel");
+        var button = document.getElementById("exoVerify");
         if (button) button.disabled = !myDiagram.isModified;
         var idx = document.title.indexOf("*");
         if (myDiagram.isModified) {
@@ -333,8 +333,13 @@
       myDiagram.isModified = false;
     }
     function load() {
-      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);      
     }
+
+    function load2() {
+      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel2").value);      
+    }
+
     </script>
        
     </head>
@@ -371,7 +376,7 @@
               </div>
           
               <div style="visibility:hidden;">
-                  <button id="saveModel" onclick="save()">Save</button>
+                  <button  onclick="save()">Save</button>
                   <button onclick="load()">Load</button>
                   Diagram Model saved in JSON format:
               </div>
@@ -412,15 +417,44 @@
                 <button id="exoVerify" type="button" class="btn btn-success" onclick="save()" >Vérifier</button>
                  <!-- CALL API vrifi exercice  -->
                 <p> </p>
-                <button id="correctionLoad"type="button" class="btn btn-dark" onclick="load()">Correction</button>
-                <!-- CALL API get correction -->
+                <button id="correctionLoad"type="button" class="btn btn-dark" ">Correction</button>
+                <!-- <button id="correctionLoad"type="button" class="btn btn-dark" onclick="load()">Correction</button>  //////CALL API get correction -->
                 <p> </p>
                
         </div>
 
     </body>
     <script>
-function checkEq( ) { 
+       
+
+      function getCorrection(idExoProf){
+        var result;
+        var jwt= Cookies.get('LS_token');                              
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.mtrembley.fr/api/cours/exercices/"+idExoProf, true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.setRequestHeader('Authorization',jwt);
+        xhr.send(); 
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4){
+                if(xhr.status == 202 ||xhr.status == 200 || xhr.status ==201) {
+                    result =JSON.parse(xhr.responseText);
+                    //console.log(result);   
+                    result = result.npi;
+                    //console.log(exoProf);   
+                    //$("#mySavedModel2").val(exoProf);         
+                }
+                else { 
+                    console.log("Code erreur :" +xhr.status);                              
+                    alert("Erreure d'execution !" );
+                }
+            }
+        } 
+        return result; 
+      }
+      
+
+      function checkEq( ) { 
         var textarea1 = $('#mySavedModel').val();
         var tabLink1= createLinkTab(textarea1);
         console.log("tabLink1 : ");
@@ -437,55 +471,84 @@ function checkEq( ) {
         }
       }  
       
-function createLinkTab( textareaInput) { 
-    var dictNode= {} ;
-    var tabLink= [] ;
-    var textareaJson1 = $.parseJSON(textareaInput);
-    var nodeArray = textareaJson1.nodeDataArray ;
-    $.each(nodeArray, function(i, item) {
-        dictNode[item.key] = item.category ;
-    });
-    var nodeLink = textareaJson1.linkDataArray;
-    $.each(nodeLink, function(i, item) {
-        item.from=dictNode[item.from];
-        item.to=dictNode[item.to];
-        tabLink.push(item);     
-    });
-    return tabLink; 
-}  
-
-function jsonTabEqual( table1, table2) { 
-    var result = true;
-    var boole= false;
-    if(table1.length!=table2.length){
-        result=false;
-    }
-    else{
-        $.each(table1, function(i, item) {
-             $.each(table2, function(j, item2) {
-                if(JSON.stringify(item) === JSON.stringify(item2)){
-                    boole=true;
-                    return false;
-                }
-            });
-            if(boole==false){
-                result= false;
-                return false;
-            }
-            boole=false;
+      function createLinkTab( textareaInput) { 
+        var dictNode= {} ;
+        var tabLink= [] ;
+        var textareaJson1 = $.parseJSON(textareaInput);
+        var nodeArray = textareaJson1.nodeDataArray ;
+        $.each(nodeArray, function(i, item) {
+            dictNode[item.key] = item.category ;
         });
-    }
-    return result;
-}  
+        var nodeLink = textareaJson1.linkDataArray;
+        $.each(nodeLink, function(i, item) {
+            item.from=dictNode[item.from];
+            item.to=dictNode[item.to];
+            tabLink.push(item);     
+        });
+        return tabLink; 
+      }  
 
-      
+      function jsonTabEqual( table1, table2) { 
+          var result = true;
+          var boole= false;
+          if(table1.length!=table2.length){
+              result=false;
+          }
+          else{
+              $.each(table1, function(i, item) {
+                  $.each(table2, function(j, item2) {
+                      if(JSON.stringify(item) === JSON.stringify(item2)){
+                          boole=true;
+                          return false;
+                      }
+                  });
+                  if(boole==false){
+                      result= false;
+                      return false;
+                  }
+                  boole=false;
+              });
+          }
+          return result;
+      }  
 
         $(document).ready(function(){
+
+          $("#correctionLoad").click(function() {  
+            var idExoProf = Cookies.get('LS_ExoId'); 
+            var jwt= Cookies.get('LS_token');                              
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://api.mtrembley.fr/api/cours/exercices/"+idExoProf, true);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.setRequestHeader('Authorization',jwt);
+            xhr.send(); 
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4){
+                    if(xhr.status == 202 ||xhr.status == 200 || xhr.status ==201) {
+                        result =JSON.parse(xhr.responseText);
+                        //console.log(result);   
+                        exoProf = result.npi;
+                        //console.log(exoProf);   
+                        $("#mySavedModel2").val(exoProf);
+                        load2();         
+                    }
+                    else { 
+                        console.log("Code erreur :" +xhr.status);                              
+                        alert("Erreure d'execution !" );
+                    }
+                }
+            } 
+          });
+
+          function loadCorrection(graph) {
+            myDiagram.model = go.Model.fromJson(graph);      
+          }
             // NORMALEMENT CALL API get exercice par ID 
             var exoLabel = Cookies.get('LS_Exo');
             $('#exoLabel').html(exoLabel);
             checkCookie();
             loadHeader();  
+            /*
             $("#toShow").hide();
             $("#verifyText").hide();
             $("#correctionText").hide();
@@ -498,7 +561,7 @@ function jsonTabEqual( table1, table2) {
                 $("#verifyText").hide();
                 $("#correctionText").show();
                 $("#toShow").show();
-            });
+            });*/
   
 
 
