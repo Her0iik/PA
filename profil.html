@@ -72,8 +72,9 @@
 
             jsonUser = JSON.parse(Cookies.get('LS_user'));
             $("#nom").val(jsonUser["name"]);
+            console.log(jsonUser["mail"]);
             $("#prenom").val(jsonUser["surmane"]);
-            $("#email").val(jsonUser["mail"]);
+            $("#inputEmail").val(jsonUser["mail"]);
             $("#logout").click(function(){
                 Cookies.remove('LS_user');
                 Cookies.remove('LS_token');

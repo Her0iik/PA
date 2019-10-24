@@ -418,6 +418,7 @@
                     var coef =$("#coefExo").val();
                     var exoLabel =$("#exoLabel").val();
                     var diagram =$("#mySavedModel").val();
+                    //console.log("diagrams :"+diagram );
                     var coursId =parseInt($("#selectCours option:selected").val());
                     var xhr3 = new XMLHttpRequest();
                     xhr3.open("PUT", "https://api.mtrembley.fr/api/cours/exercices/edit", true);
@@ -429,7 +430,7 @@
                     xhr3.onreadystatechange = function() {
                         if (xhr3.readyState == 4){
                             if(xhr3.status ==201) {
-                                console.log("rep succes :");
+                                console.log("rep succes :"+xhr3.status);
                                 alert("Modification de l'exercice sauvegardé !" );                       
                             }
                             else { 
@@ -440,7 +441,6 @@
                     }  
                 });
           
-
             jsonUser = JSON.parse(Cookies.get('LS_user'));
             var jwt= Cookies.get('LS_token');       
             var xhr = new XMLHttpRequest();
@@ -452,8 +452,10 @@
                 if (xhr.readyState == 4){
                     if(xhr.status == 202 ||xhr.status == 200) {
                         //console.log("respond api call DIAGRAM: "+xhr.responseText);
-                         exo = JSON.parse(xhr.responseText);
+                        exo = JSON.parse(xhr.responseText);
+                        //console.log("exo: "+exo);
                         diagram = exo.npi;
+                       // console.log("exo: "+diagram);
                         $('#mySavedModel').text(diagram);
                         load();
                         exerciceLabel = exo.exerciceLabel;
